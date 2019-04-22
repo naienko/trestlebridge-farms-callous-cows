@@ -22,7 +22,13 @@ namespace Trestlebridge.Actions {
             Console.Write ("> ");
             int choice = Int32.Parse(Console.ReadLine ());
 
-            farm.ChickenHouses[choice-1].AddResource(animal);
+            try {
+                farm.ChickenHouses[choice-1].AddResource(animal);
+            } catch (ArgumentOutOfRangeException) {
+                Console.WriteLine($"Invalid option: {choice}");
+                Console.WriteLine("Press any key to go back to main menu.");
+                Console.ReadLine();
+            }
         }
     }
 }
