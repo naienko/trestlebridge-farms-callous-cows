@@ -2,10 +2,11 @@ trestlebridge
 
 option 1
 	add 3 missing options
-	provide a notice when field is added?
+	STRETCH: provide a notice when field is added
 
 option 2
 	add missing animals
+		update Chicken to have eggs and feathers
 	
 option 3
 	doesn't exist; build from scratch
