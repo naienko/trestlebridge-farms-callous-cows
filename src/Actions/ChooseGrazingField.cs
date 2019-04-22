@@ -26,6 +26,8 @@ namespace Trestlebridge.Actions {
                 farm.GrazingFields[choice-1].AddResource(animal);
             } catch (ArgumentOutOfRangeException) {
                 Console.WriteLine($"Invalid option: {choice}");
+                Console.WriteLine("Press any key to go back to main menu.");
+                Console.ReadLine();
             }
 
             /*

@@ -7,7 +7,7 @@ using Trestlebridge.Interfaces;
 namespace Trestlebridge.Models.Facilities {
     public class GrazingField : IFacility<IGrazing>
     {
-        private int _capacity = 20;
+        private int _capacity = 2;
         private Guid _id = Guid.NewGuid();
 
         private List<IGrazing> _animals = new List<IGrazing>();
@@ -24,7 +24,9 @@ namespace Trestlebridge.Models.Facilities {
                 _animals.Add(animal);
             } else {
                 Console.WriteLine("**** That facility is not large enough ****");
-                Console.WriteLine("****     Please choose another one      ****");
+                Console.WriteLine("****     Please choose another one     ****");
+                Console.WriteLine("Press any key to go back to main menu.");
+                Console.ReadLine();
             }
         }
 
@@ -34,7 +36,9 @@ namespace Trestlebridge.Models.Facilities {
                 _animals.AddRange(animals);
             } else {
                 Console.WriteLine("**** That facility is not large enough ****");
-                Console.WriteLine("****     Please choose another one      ****");
+                Console.WriteLine("****     Please choose another one     ****");
+                Console.WriteLine("Press any key to go back to main menu.");
+                Console.ReadLine();
             }
         }
 

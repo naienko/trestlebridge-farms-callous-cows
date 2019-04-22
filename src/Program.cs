@@ -67,6 +67,8 @@ namespace Trestlebridge
                 else
                 {
                     Console.WriteLine($"Invalid option: {option}");
+                    Console.WriteLine("Press any key to go back to main menu.");
+                    Console.ReadLine();
                 }
             }
         }

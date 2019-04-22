@@ -22,7 +22,7 @@ namespace Trestlebridge.Models.Animals {
             Console.WriteLine($"Goat {this._shortId} just ate {this.GrassPerDay}kg of grass");
         }
 
-		public double Harvest () {
+		public double Glean () {
 			return _compostProduced;
 		}
 
