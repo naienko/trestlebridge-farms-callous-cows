@@ -5,10 +5,10 @@ option 1
 	STRETCH: provide a notice when field is added
 
 option 2
-	add missing animals
 		update Chicken to have eggs and feathers
 		update Duck to have eggs and feathers
-	add warning if purchasing before field created
+		update Ostrich to have eggs
+	STRETCH: add warning if purchasing before field created
 	
 option 3
 	doesn't exist; build from scratch

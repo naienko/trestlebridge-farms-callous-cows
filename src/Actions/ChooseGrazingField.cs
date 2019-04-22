@@ -22,7 +22,11 @@ namespace Trestlebridge.Actions {
             Console.Write ("> ");
             int choice = Int32.Parse(Console.ReadLine ());
 
-            farm.GrazingFields[choice-1].AddResource(animal);
+            try {
+                farm.GrazingFields[choice-1].AddResource(animal);
+            } catch (ArgumentOutOfRangeException) {
+                Console.WriteLine($"Invalid option: {choice}");
+            }
 
             /*
                 Couldn't get this to work. Can you?
