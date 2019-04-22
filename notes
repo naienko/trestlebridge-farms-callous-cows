@@ -8,6 +8,8 @@ option 2
 	add missing animals
 		update Chicken to have eggs and feathers
 		update Duck to have eggs and feathers
+	trace steps from initial selection
+	add warning if purchasing before field created
 	
 option 3
 	doesn't exist; build from scratch
