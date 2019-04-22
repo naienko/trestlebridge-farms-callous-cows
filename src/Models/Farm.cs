@@ -10,6 +10,7 @@ namespace Trestlebridge.Models
     {
         public List<GrazingField> GrazingFields { get; } = new List<GrazingField>();
         public List<PlowedField> PlowedFields { get; set; } = new List<PlowedField>();
+        public List<NaturalField> NaturalFields { get; set; } = new List<NaturalField>();
 
         /*
             This method must specify the correct product interface of the
@@ -38,12 +39,18 @@ namespace Trestlebridge.Models
             PlowedFields.Add(field);
         }
 
+        public void AddNaturalField (NaturalField field)
+        {
+            NaturalFields.Add(field);
+        }
+
         public override string ToString()
         {
             StringBuilder report = new StringBuilder();
 
             GrazingFields.ForEach(gf => report.Append(gf));
             PlowedFields.ForEach(pf => report.Append(pf));
+            NaturalFields.ForEach(nf => report.Append(nf));
 
             return report.ToString();
         }

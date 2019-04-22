@@ -7,10 +7,10 @@ using Trestlebridge.Interfaces;
 namespace Trestlebridge.Models.Facilities {
     public class NaturalField
     {
-        private int _capacity = 13;
+        private int _capacity = 10;
         private Guid _id = Guid.NewGuid();
 
-        private List<ISeedProducing> _plants = new List<ISeedProducing>();
+        private List<ICompostProducing> _plants = new List<ICompostProducing>();
 
         public double Capacity {
             get {
@@ -18,7 +18,7 @@ namespace Trestlebridge.Models.Facilities {
             }
         }
 
-        public void AddResource (ISeedProducing plant)
+        public void AddResource (ICompostProducing plant)
         {
             if (_plants.Count < _capacity) {
                 _plants.Add(plant);
@@ -30,7 +30,7 @@ namespace Trestlebridge.Models.Facilities {
             StringBuilder output = new StringBuilder();
             string shortId = $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
 
-            output.Append($"Plowed field {shortId} has {this._plants.Count} plants\n");
+            output.Append($"Natural field {shortId} has {this._plants.Count} plants\n");
             this._plants.ForEach(a => output.Append($"   {a}\n"));
 
             return output.ToString();
