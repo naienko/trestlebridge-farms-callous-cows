@@ -5,7 +5,7 @@ using Trestlebridge.Interfaces;
 
 
 namespace Trestlebridge.Models.Facilities {
-    public class PlowedField
+    public class PlowedField : IFacility<ISeedProducing>
     {
         private int _capacity = 13;
         private Guid _id = Guid.NewGuid();
@@ -22,6 +22,13 @@ namespace Trestlebridge.Models.Facilities {
         {
             if (_plants.Count < _capacity) {
                 _plants.Add(plant);
+            }
+        }
+
+        public void AddResource (List<ISeedProducing> plants)  // TODO: Take out this method for boilerplate
+        {
+            if (_plants.Count + plants.Count <= _capacity) {
+                _plants.AddRange(plants);
             }
         }
 
