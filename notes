@@ -1,21 +1,15 @@
 trestlebridge
 
 option 1
-	add 3 missing options
 	STRETCH: provide a notice when field is added
 
 option 2
-		update Chicken to have eggs and feathers
-		update Duck to have eggs and feathers
-		update Ostrich to have eggs
 	STRETCH: add warning if purchasing before field created
 	facility-full warning should return to choose-facility menu
-	choose-facility menu should show how many animals are in facility
 	
 option 3
 	STRETCH: add warning if purchasing before field created
 	facility-full warning should return to choose-facility menu
-	choose-facility menu should show how many plants are in facility
 	
 option 4
 	monitor for changes as 1-3 are updated
