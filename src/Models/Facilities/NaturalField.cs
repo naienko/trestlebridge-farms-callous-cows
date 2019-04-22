@@ -18,6 +18,12 @@ namespace Trestlebridge.Models.Facilities {
             }
         }
 
+        public List<ICompostProducing> Plants {
+            get {
+                return _plants;
+            }
+        }
+
         public void AddResource (ICompostProducing plant)
         {
             if (_plants.Count < _capacity) {

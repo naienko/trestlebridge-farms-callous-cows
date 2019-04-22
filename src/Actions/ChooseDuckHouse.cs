@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
+using Trestlebridge.Models.Facilities;
 using Trestlebridge.Models.Animals;
 
 namespace Trestlebridge.Actions {
@@ -9,9 +10,9 @@ namespace Trestlebridge.Actions {
         public static void CollectInput (Farm farm, Duck animal) {
             Console.Clear();
 
-            for (int i = 0; i < farm.DuckHouses.Count; i++)
+            foreach (DuckHouse field in farm.DuckHouses)
             {
-                Console.WriteLine ($"{i + 1}. Duck House");
+                Console.WriteLine ($"{farm.DuckHouses.IndexOf(field)+1}. Plowed Field ({field.Ducks.Count} of {field.Capacity} ducks)");
             }
 
             Console.WriteLine ();
@@ -21,7 +22,13 @@ namespace Trestlebridge.Actions {
             Console.Write ("> ");
             int choice = Int32.Parse(Console.ReadLine ());
 
-            farm.DuckHouses[choice-1].AddResource(animal);
+            try {
+                farm.DuckHouses[choice-1].AddResource(animal);
+            } catch (ArgumentOutOfRangeException) {
+                Console.WriteLine($"Invalid option: {choice}");
+                Console.WriteLine("Press any key to go back to main menu.");
+                Console.ReadLine();
+            }
         }
     }
 }

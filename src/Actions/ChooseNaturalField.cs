@@ -2,16 +2,16 @@ using System;
 using System.Linq;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
-using Trestlebridge.Models.Animals;
+using Trestlebridge.Models.Facilities;
 
 namespace Trestlebridge.Actions {
     public class ChooseNaturalField {
         public static void CollectInput (Farm farm, ICompostProducing plant) {
             Console.Clear();
 
-            for (int i = 0; i < farm.NaturalFields.Count; i++)
+           foreach (NaturalField field in farm.NaturalFields)
             {
-                Console.WriteLine ($"{i + 1}. Natural Field");
+                Console.WriteLine ($"{farm.NaturalFields.IndexOf(field)+1}. Natural Field ({field.Plants.Count} of {field.Capacity} rows)");
             }
 
             Console.WriteLine ();

@@ -2,16 +2,16 @@ using System;
 using System.Linq;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
-using Trestlebridge.Models.Animals;
+using Trestlebridge.Models.Facilities;
 
 namespace Trestlebridge.Actions {
     public class ChooseGrazingField {
         public static void CollectInput (Farm farm, IGrazing animal) {
             Console.Clear();
 
-            for (int i = 0; i < farm.GrazingFields.Count; i++)
+            foreach (GrazingField field in farm.GrazingFields)
             {
-                Console.WriteLine ($"{i + 1}. Grazing Field");
+                Console.WriteLine ($"{farm.GrazingFields.IndexOf(field)+1}. Plowed Field ({field.Animals.Count} of {field.Capacity} animals)");
             }
 
             Console.WriteLine ();
