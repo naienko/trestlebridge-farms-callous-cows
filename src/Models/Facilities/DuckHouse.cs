@@ -23,13 +23,23 @@ namespace Trestlebridge.Models.Facilities {
         {
             if (_ducks.Count < _capacity) {
                 _ducks.Add(bird);
+            } else {
+                Console.WriteLine("**** That facility is not large enough ****");
+                Console.WriteLine("****     Please choose another one     ****");
+                Console.WriteLine("Press any key to go back to main menu.");
+                Console.ReadLine();
             }
         }
 
-      public void AddResource (List<Duck> birds)  // TODO: Take out this method for boilerplate
+      public void AddResource (List<Duck> birds)
         {
             if (_ducks.Count + birds.Count <= _capacity) {
                 _ducks.AddRange(birds);
+            } else {
+                Console.WriteLine("**** That facility is not large enough ****");
+                Console.WriteLine("****     Please choose another one     ****");
+                Console.WriteLine("Press any key to go back to main menu.");
+                Console.ReadLine();
             }
         }
 
