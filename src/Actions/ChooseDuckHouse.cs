@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
+using Trestlebridge.Models.Facilities;
 using Trestlebridge.Models.Animals;
 
 namespace Trestlebridge.Actions {
@@ -9,9 +10,9 @@ namespace Trestlebridge.Actions {
         public static void CollectInput (Farm farm, Duck animal) {
             Console.Clear();
 
-            for (int i = 0; i < farm.DuckHouses.Count; i++)
+            foreach (DuckHouse field in farm.DuckHouses)
             {
-                Console.WriteLine ($"{i + 1}. Duck House");
+                Console.WriteLine ($"{farm.DuckHouses.IndexOf(field)+1}. Plowed Field ({field.Ducks.Count} of {field.Capacity} ducks)");
             }
 
             Console.WriteLine ();

@@ -18,6 +18,12 @@ namespace Trestlebridge.Models.Facilities {
             }
         }
 
+        public List<IGrazing> Animals {
+            get {
+                return _animals;
+            }
+        }
+
         public void AddResource (IGrazing animal)
         {
             if (_animals.Count < _capacity) {

@@ -19,6 +19,12 @@ namespace Trestlebridge.Models.Facilities {
             }
         }
 
+        public List<Duck> Ducks {
+            get {
+                return _ducks;
+            }
+        }
+
         public void AddResource (Duck bird)
         {
             if (_ducks.Count < _capacity) {
