@@ -22,6 +22,11 @@ namespace Trestlebridge.Models.Facilities {
         {
             if (_plants.Count < _capacity) {
                 _plants.Add(plant);
+            } else {
+                Console.WriteLine("**** That facility is not large enough ****");
+                Console.WriteLine("****     Please choose another one     ****");
+                Console.WriteLine("Press any key to go back to main menu.");
+                Console.ReadLine();
             }
         }
 
@@ -29,6 +34,11 @@ namespace Trestlebridge.Models.Facilities {
         {
             if (_plants.Count + plants.Count <= _capacity) {
                 _plants.AddRange(plants);
+            } else {
+                Console.WriteLine("**** That facility is not large enough ****");
+                Console.WriteLine("****     Please choose another one     ****");
+                Console.WriteLine("Press any key to go back to main menu.");
+                Console.ReadLine();
             }
         }
 
