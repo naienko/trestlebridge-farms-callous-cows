@@ -1,0 +1,14 @@
+trestlebridge
+
+option 1
+	add 3 missing options
+	provide a notice when field is added?
+
+option 2
+	add missing animals
+	
+option 3
+	doesn't exist; build from scratch
+	
+option 4
+	monitor for changes as 1-3 are updated
