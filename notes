@@ -9,6 +9,8 @@ option 2
 		update Duck to have eggs and feathers
 		update Ostrich to have eggs
 	STRETCH: add warning if purchasing before field created
+	facility-full warning should return to choose-facility menu
+	choose-facility menu should show how many animals are in facility
 	
 option 3
 	doesn't exist; build from scratch
