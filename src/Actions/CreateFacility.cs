@@ -36,6 +36,9 @@ namespace Trestlebridge.Actions {
                     farm.AddDuckHouse(new DuckHouse());
                     break;
                 default:
+                    Console.WriteLine($"Invalid option: {input}");
+                    Console.WriteLine("Press any key to go back to main menu.");
+                    Console.ReadLine();
                     break;
             }
         }
