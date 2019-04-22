@@ -7,6 +7,7 @@ option 1
 option 2
 	add missing animals
 		update Chicken to have eggs and feathers
+		update Duck to have eggs and feathers
 	
 option 3
 	doesn't exist; build from scratch
