@@ -9,7 +9,9 @@ namespace Trestlebridge.Actions {
         public static void CollectInput (Farm farm, ICompostProducing plant) {
            foreach (NaturalField field in farm.NaturalFields)
             {
-                Console.WriteLine ($"{farm.NaturalFields.IndexOf(field)+1}. Natural Field ({field.Plants.Count} of {field.Capacity} rows)");
+                if (field.Plants.Count < field.Capacity) {
+                    Console.WriteLine ($"{farm.NaturalFields.IndexOf(field)+1}. Natural Field ({field.Plants.Count} of {field.Capacity} rows)");
+                }
             }
 
             Console.WriteLine ();

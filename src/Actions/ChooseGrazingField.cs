@@ -9,8 +9,12 @@ namespace Trestlebridge.Actions {
         public static void CollectInput (Farm farm, IGrazing animal) {
             foreach (GrazingField field in farm.GrazingFields)
             {
-                Console.WriteLine ($"{farm.GrazingFields.IndexOf(field)+1}. Plowed Field ({field.Animals.Count} of {field.Capacity} animals)");
+                if (field.Animals.Count < field.Capacity) {
+                    Console.WriteLine ($"{farm.GrazingFields.IndexOf(field)+1}. Plowed Field ({field.Animals.Count} of {field.Capacity} animals)");
+                }
             }
+            // STRETCH: realign numbers for facility listing when it skips full ones
+            // put available fields in a new temporary List<>? then foreach the list?
 
             Console.WriteLine ();
 
