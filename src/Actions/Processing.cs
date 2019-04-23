@@ -20,7 +20,7 @@ namespace Trestlebridge.Actions {
 			Console.Write ("> ");
 			
 			string choice = Console.ReadLine ();
-            Console.Clear();
+            //Console.Clear();
             switch (Int32.Parse(choice))
 			{
 				case 1:

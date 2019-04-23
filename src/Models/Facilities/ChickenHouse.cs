@@ -7,12 +7,14 @@ using Trestlebridge.Actions;
 
 
 namespace Trestlebridge.Models.Facilities {
-    public class ChickenHouse : IFacility<Chicken>
+    public class ChickenHouse : IFacility<Chicken>, IMeatProcess<Chicken>
     {
         private int _capacity = 15;
         private Guid _id = Guid.NewGuid();
 
-        private List<Chicken> _chickens = new List<Chicken>();
+        private List<Chicken> _animals = new List<Chicken>();
+
+        public string Type { get; } = "Chicken House";
 
         public double Capacity {
             get {
@@ -20,16 +22,16 @@ namespace Trestlebridge.Models.Facilities {
             }
         }
 
-        public List<Chicken> Chickens {
+        public List<Chicken> Animals {
             get {
-                return _chickens;
+                return _animals;
             }
         }
 
         public void AddResource (Farm farm, Chicken bird)
         {
-            if (_chickens.Count < _capacity) {
-                _chickens.Add(bird);
+            if (_animals.Count < _capacity) {
+                _animals.Add(bird);
             } else {
                 Console.WriteLine("**** That facility is not large enough ****");
                 Console.WriteLine("****     Please choose another one     ****");
@@ -39,8 +41,8 @@ namespace Trestlebridge.Models.Facilities {
 
       public void AddResource (List<Chicken> birds)
         {
-            if (_chickens.Count + birds.Count <= _capacity) {
-                _chickens.AddRange(birds);
+            if (_animals.Count + birds.Count <= _capacity) {
+                _animals.AddRange(birds);
             } else {
                 Console.WriteLine("**** That facility is not large enough ****");
                 Console.WriteLine("****     Please choose another one     ****");
@@ -54,8 +56,8 @@ namespace Trestlebridge.Models.Facilities {
             StringBuilder output = new StringBuilder();
             string shortId = $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
 
-            output.Append($"Chicken house {shortId} has {this._chickens.Count} chickens\n");
-            this._chickens.ForEach(a => output.Append($"   {a}\n"));
+            output.Append($"Chicken house {shortId} has {this._animals.Count} chickens\n");
+            this._animals.ForEach(a => output.Append($"   {a}\n"));
 
             return output.ToString();
         }
