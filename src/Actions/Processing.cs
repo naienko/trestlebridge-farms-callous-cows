@@ -7,6 +7,7 @@ using Trestlebridge.Interfaces;
 namespace Trestlebridge.Actions {
 	public class Processing {
 		public static void CollectInput (Farm farm) {
+			Console.Clear();
 			Console.WriteLine ("1. Seed Harvester");
 			Console.WriteLine ("2. Meat Processor");
 			Console.WriteLine ("3. Egg Gatherer");
@@ -27,23 +28,20 @@ namespace Trestlebridge.Actions {
 					break;
 				case 2:
 					//list all of all types of facilities
-					List<IMeatFacility> wheresTheMeat = new List<IMeatFacility>();
 					foreach (GrazingField field in farm.GrazingFields)
 					{
-						wheresTheMeat.Add(field);
+						Console.WriteLine($"{farm.GrazingFields.IndexOf(field)+1}. Grazing Field ({field.Animals.Count} animals)");
 					}
 					foreach (ChickenHouse house in farm.ChickenHouses)
 					{
-						wheresTheMeat.Add(house);
+						Console.WriteLine($"{farm.ChickenHouses.IndexOf(house)+1+farm.GrazingFields.Count}. Chicken House ({house.Chickens.Count} chickens)");
 					}
 					foreach (DuckHouse house in farm.DuckHouses)
 					{
-						wheresTheMeat.Add(house);
+						Console.WriteLine($"{farm.DuckHouses.IndexOf(house)+1+farm.GrazingFields.Count+farm.ChickenHouses.Count}. Duck House ({house.Ducks.Count} ducks)");
 					}
-					foreach (IMeatFacility facility in wheresTheMeat)
-					{
-						Console.WriteLine($"{wheresTheMeat.IndexOf(facility)+1}. {facility.Type} ({facility.} animals)");
-					}
+					Console.Write ("> ");
+					Console.ReadLine();
 					//then jump to list 'type and count of animals' in chosen facility (hashset)
 					//at what point do I break out into a different file?
 					break;

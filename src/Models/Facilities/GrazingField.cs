@@ -6,14 +6,12 @@ using Trestlebridge.Actions;
 
 
 namespace Trestlebridge.Models.Facilities {
-    public class GrazingField : IFacility<IGrazing>, IMeatFacility
+    public class GrazingField : IFacility<IGrazing>
     {
         private int _capacity = 2;
         private Guid _id = Guid.NewGuid();
 
         private List<IGrazing> _animals = new List<IGrazing>();
-
-        public string Type { get; } = "Grazing field";
 
         public double Capacity {
             get {

@@ -7,14 +7,12 @@ using Trestlebridge.Actions;
 
 
 namespace Trestlebridge.Models.Facilities {
-    public class DuckHouse : IFacility<Duck>, IMeatFacility
+    public class DuckHouse : IFacility<Duck>
     {
         private int _capacity = 15;
         private Guid _id = Guid.NewGuid();
 
         private List<Duck> _ducks = new List<Duck>();
-
-        public string Type { get; } = "Duck house";
 
         public double Capacity {
             get {

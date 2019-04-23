@@ -11,7 +11,7 @@ namespace Trestlebridge.Actions {
             foreach (DuckHouse field in farm.DuckHouses)
             {
                 if (field.Ducks.Count < field.Capacity) {
-                    Console.WriteLine ($"{farm.DuckHouses.IndexOf(field)+1}. Plowed Field ({field.Ducks.Count} of {field.Capacity} ducks)");
+                    Console.WriteLine ($"{farm.DuckHouses.IndexOf(field)+1}. Duck House ({field.Ducks.Count} of {field.Capacity} ducks)");
                 }
             }
 
