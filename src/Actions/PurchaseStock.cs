@@ -29,25 +29,74 @@ namespace Trestlebridge.Actions
 				switch (choice)
 				{
 					case 1:
-						ChooseChickenHouse.CollectInput(farm, new Chicken());
+						if (farm.ChickenHouses.Count != 0) {
+							ChooseChickenHouse.CollectInput(farm, new Chicken());
+						} else {
+							Console.WriteLine("You don't have any facilities for this animal!");
+							Console.WriteLine("Press any key to go to the Create Facility menu");
+							Console.ReadLine();
+							CreateFacility.CollectInput(farm);
+						}
 						break;
 					case 2:
-						ChooseGrazingField.CollectInput(farm, new Cow());
+						if (farm.GrazingFields.Count != 0) {
+							ChooseGrazingField.CollectInput(farm, new Cow());
+						} else {
+							Console.WriteLine("You don't have any facilities for this animal!");
+							Console.WriteLine("Press any key to go to the Create Facility menu");
+							Console.ReadLine();
+							CreateFacility.CollectInput(farm);
+						}
 						break;
 					case 3:
-						ChooseDuckHouse.CollectInput(farm, new Duck());
+						if (farm.DuckHouses.Count != 0) {
+							ChooseDuckHouse.CollectInput(farm, new Duck());
+						} else {
+							Console.WriteLine("You don't have any facilities for this animal!");
+							Console.WriteLine("Press any key to go to the Create Facility menu");
+							Console.ReadLine();
+							CreateFacility.CollectInput(farm);
+						}
 						break;
 					case 4:
-						ChooseGrazingField.CollectInput(farm, new Goat());
+						if (farm.GrazingFields.Count != 0) {
+							ChooseGrazingField.CollectInput(farm, new Goat());
+						} else {
+							Console.WriteLine("You don't have any facilities for this animal!");
+							Console.WriteLine("Press any key to go to the Create Facility menu");
+							Console.ReadLine();
+							CreateFacility.CollectInput(farm);
+						}
 						break;
 					case 5:
-						ChooseGrazingField.CollectInput(farm, new Ostrich());
+						if (farm.GrazingFields.Count != 0) {
+							ChooseGrazingField.CollectInput(farm, new Ostrich());
+						} else {
+							Console.WriteLine("You don't have any facilities for this animal!");
+							Console.WriteLine("Press any key to go to the Create Facility menu");
+							Console.ReadLine();
+							CreateFacility.CollectInput(farm);
+						}
 						break;
 					case 6:
-						ChooseGrazingField.CollectInput(farm, new Pig());
+						if (farm.GrazingFields.Count != 0) {
+							ChooseGrazingField.CollectInput(farm, new Pig());
+						} else {
+							Console.WriteLine("You don't have any facilities for this animal!");
+							Console.WriteLine("Press any key to go to the Create Facility menu");
+							Console.ReadLine();
+							CreateFacility.CollectInput(farm);
+						}
 						break;
 					case 7:
-						ChooseGrazingField.CollectInput(farm, new Sheep());
+						if (farm.GrazingFields.Count != 0) {
+							ChooseGrazingField.CollectInput(farm, new Sheep());
+						} else {
+							Console.WriteLine("You don't have any facilities for this animal!");
+							Console.WriteLine("Press any key to go to the Create Facility menu");
+							Console.ReadLine();
+							CreateFacility.CollectInput(farm);
+						}
 						break;
 					default:
 						Console.WriteLine($"Invalid option: {choice}");
