@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Trestlebridge.Models;
 using Trestlebridge.Models.Facilities;
 using Trestlebridge.Interfaces;
+using Trestlebridge.Actions.Producers;
 
 namespace Trestlebridge.Actions {
 	public class Processing {
@@ -27,23 +28,7 @@ namespace Trestlebridge.Actions {
 					CollectInput(farm);
 					break;
 				case 2:
-					//list all of all types of facilities
-					foreach (GrazingField field in farm.GrazingFields)
-					{
-						Console.WriteLine($"{farm.GrazingFields.IndexOf(field)+1}. Grazing Field ({field.Animals.Count} animals)");
-					}
-					foreach (ChickenHouse house in farm.ChickenHouses)
-					{
-						Console.WriteLine($"{farm.ChickenHouses.IndexOf(house)+1+farm.GrazingFields.Count}. Chicken House ({house.Chickens.Count} chickens)");
-					}
-					foreach (DuckHouse house in farm.DuckHouses)
-					{
-						Console.WriteLine($"{farm.DuckHouses.IndexOf(house)+1+farm.GrazingFields.Count+farm.ChickenHouses.Count}. Duck House ({house.Ducks.Count} ducks)");
-					}
-					Console.Write ("> ");
-					Console.ReadLine();
-					//then jump to list 'type and count of animals' in chosen facility (hashset)
-					//at what point do I break out into a different file?
+					ChooseMeatProducer.CollectInput(farm);
 					break;
 				case 3:
 					Console.WriteLine("Not available yet");

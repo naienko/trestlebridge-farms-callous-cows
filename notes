@@ -14,8 +14,13 @@ option 4
 
 processing
 1 choose processor 
-2 choose facility based on what the processor processes 
-3 choose animal type from facility.Animals list (use hashset again?) 
+2 choose facility based on what the processor processes -- break out into new file
+	ChooseMeatProducer
+	ChooseEggProducer
+	ChooseCompostProducer
+	ChooseFeatherProducer
+	ChooseSeedProducer
+3 choose animal type from facility.Animals list (use hashset again) 
 4 choose how many 
 5 check processor capacity 
 6 add 'how many of type' to List to be processed
