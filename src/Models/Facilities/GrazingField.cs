@@ -6,12 +6,14 @@ using Trestlebridge.Actions;
 
 
 namespace Trestlebridge.Models.Facilities {
-    public class GrazingField : IFacility<IGrazing>
+    public class GrazingField : IFacility<IGrazing>, IMeatFacility
     {
         private int _capacity = 2;
         private Guid _id = Guid.NewGuid();
 
         private List<IGrazing> _animals = new List<IGrazing>();
+
+        public string Type { get; } = "Grazing field";
 
         public double Capacity {
             get {
@@ -25,7 +27,7 @@ namespace Trestlebridge.Models.Facilities {
             }
         }
 
-        public void AddResource (Farm farm, IGrazing animal)
+		public void AddResource (Farm farm, IGrazing animal)
         {
             if (_animals.Count < _capacity) {
                 _animals.Add(animal);
