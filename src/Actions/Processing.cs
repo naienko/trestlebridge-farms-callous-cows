@@ -24,8 +24,8 @@ namespace Trestlebridge.Actions {
             switch (Int32.Parse(choice))
 			{
 				case 1:
-					Console.WriteLine("Not available yet");
-					CollectInput(farm);
+					//Console.WriteLine("Not available yet");
+					ChooseSeedProducer.CollectInput(farm);
 					break;
 				case 2:
 					ChooseMeatProducer.CollectInput(farm);
