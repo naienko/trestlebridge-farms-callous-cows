@@ -1,6 +1,6 @@
 namespace Trestlebridge.Interfaces
 {
-    public interface ISeedProducing
+    public interface ISeedProducing : IResource
     {
         double Harvest ();
     }
