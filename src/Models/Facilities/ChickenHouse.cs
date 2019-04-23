@@ -3,6 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models.Animals;
+using Trestlebridge.Actions;
 
 
 namespace Trestlebridge.Models.Facilities {
@@ -25,15 +26,14 @@ namespace Trestlebridge.Models.Facilities {
             }
         }
 
-        public void AddResource (Chicken bird)
+        public void AddResource (Farm farm, Chicken bird)
         {
             if (_chickens.Count < _capacity) {
                 _chickens.Add(bird);
             } else {
                 Console.WriteLine("**** That facility is not large enough ****");
                 Console.WriteLine("****     Please choose another one     ****");
-                Console.WriteLine("Press any key to go back to main menu.");
-                Console.ReadLine();
+                ChooseChickenHouse.CollectInput(farm, bird);
             }
         }
 

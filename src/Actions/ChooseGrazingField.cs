@@ -7,8 +7,6 @@ using Trestlebridge.Models.Facilities;
 namespace Trestlebridge.Actions {
     public class ChooseGrazingField {
         public static void CollectInput (Farm farm, IGrazing animal) {
-            Console.Clear();
-
             foreach (GrazingField field in farm.GrazingFields)
             {
                 Console.WriteLine ($"{farm.GrazingFields.IndexOf(field)+1}. Plowed Field ({field.Animals.Count} of {field.Capacity} animals)");
@@ -23,7 +21,7 @@ namespace Trestlebridge.Actions {
             int choice = Int32.Parse(Console.ReadLine ());
 
             try {
-                farm.GrazingFields[choice-1].AddResource(animal);
+                farm.GrazingFields[choice-1].AddResource(farm, animal);
             } catch (ArgumentOutOfRangeException) {
                 Console.WriteLine($"Invalid option: {choice}");
                 Console.WriteLine("Press any key to go back to main menu.");

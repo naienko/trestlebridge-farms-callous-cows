@@ -24,7 +24,7 @@ namespace Trestlebridge.Models
             switch (typeof(T).ToString())
             {
                 case "Cow":
-                    GrazingFields[index].AddResource((IGrazing)resource);
+                    //GrazingFields[index].AddResource(farm, (IGrazing)resource);
                     break;
                 default:
                     break;

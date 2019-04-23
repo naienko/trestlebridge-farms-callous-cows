@@ -5,11 +5,9 @@ option 1
 
 option 2
 	STRETCH: add warning if purchasing before field created
-	facility-full warning should return to choose-facility menu
 	
 option 3
 	STRETCH: add warning if purchasing before field created
-	facility-full warning should return to choose-facility menu
 	
 option 4
 	monitor for changes as 1-3 are updated

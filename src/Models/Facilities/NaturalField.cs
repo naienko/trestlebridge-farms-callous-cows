@@ -2,6 +2,7 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 using Trestlebridge.Interfaces;
+using Trestlebridge.Actions;
 
 
 namespace Trestlebridge.Models.Facilities {
@@ -24,15 +25,14 @@ namespace Trestlebridge.Models.Facilities {
             }
         }
 
-        public void AddResource (ICompostProducing plant)
+        public void AddResource (Farm farm, ICompostProducing plant)
         {
             if (_plants.Count < _capacity) {
                 _plants.Add(plant);
             } else {
                 Console.WriteLine("**** That facility is not large enough ****");
                 Console.WriteLine("****     Please choose another one     ****");
-                Console.WriteLine("Press any key to go back to main menu.");
-                Console.ReadLine();
+                ChooseNaturalField.CollectInput(farm, plant);
             }
         }
 
