@@ -1,6 +1,6 @@
 namespace Trestlebridge.Interfaces
 {
-    public interface ICompostProducing
+    public interface ICompostProducing : IResource
     {
         double Glean ();
     }

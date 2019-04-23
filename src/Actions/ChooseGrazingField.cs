@@ -19,15 +19,15 @@ namespace Trestlebridge.Actions {
                         output.Append("0");
                     } else {
                         //group by
-                        List<CountAnimals> animalCount = (
+                        List<TypeCounter> animalCount = (
                             from ruminant in field.Animals
                             group ruminant by ruminant.Type into AnimalGroup
-                            select new CountAnimals {
+                            select new TypeCounter {
                                 Type = AnimalGroup.Key,
                                 Count = AnimalGroup.Count()
                             }
                         ).ToList();
-                        foreach (CountAnimals entry in animalCount) {
+                        foreach (TypeCounter entry in animalCount) {
                             // TODO: remove trailing comma
                             output.Append($"{entry.Count} {entry.Type},");
                         }
