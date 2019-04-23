@@ -26,7 +26,14 @@ namespace Trestlebridge.Actions
 				switch (choice)
 				{
 					case 1:
-						ChoosePlowedField.CollectInput(farm, new Sesame());
+						if (farm.PlowedFields.Count != 0) {
+							ChoosePlowedField.CollectInput(farm, new Sesame());
+						} else {
+							Console.WriteLine("You don't have any facilities for this plant!");
+							Console.WriteLine("Press any key to go to the Create Facility menu");
+							Console.ReadLine();
+							CreateFacility.CollectInput(farm);
+						}
 						break;
 					case 2:
 						Console.Clear();
@@ -38,11 +45,25 @@ namespace Trestlebridge.Actions
 						int resourceChoice = Int32.Parse(Console.ReadLine());
 						if (resourceChoice == 1)
 						{
-							ChoosePlowedField.CollectInput(farm, new Sunflower());
+							if (farm.PlowedFields.Count != 0) {
+								ChoosePlowedField.CollectInput(farm, new Sunflower());
+							} else {
+							Console.WriteLine("You don't have any facilities for this plant!");
+							Console.WriteLine("Press any key to go to the Create Facility menu");
+							Console.ReadLine();
+							CreateFacility.CollectInput(farm);
+							}
 						}
 						else if (resourceChoice == 2)
 						{
-							ChooseNaturalField.CollectInput(farm, new Sunflower());
+							if (farm.NaturalFields.Count != 0) {
+								ChooseNaturalField.CollectInput(farm, new Sunflower());
+							} else {
+							Console.WriteLine("You don't have any facilities for this plant!");
+							Console.WriteLine("Press any key to go to the Create Facility menu");
+							Console.ReadLine();
+							CreateFacility.CollectInput(farm);
+							}
 						}
 						else
 						{
@@ -52,7 +73,14 @@ namespace Trestlebridge.Actions
 						}
 						break;
 					case 3:
-						ChooseNaturalField.CollectInput(farm, new Wildflower());
+						if (farm.NaturalFields.Count != 0) {
+							ChooseNaturalField.CollectInput(farm, new Wildflower());
+						} else {
+							Console.WriteLine("You don't have any facilities for this plant!");
+							Console.WriteLine("Press any key to go to the Create Facility menu");
+							Console.ReadLine();
+							CreateFacility.CollectInput(farm);
+						}
 						break;
 					default:
                         Console.WriteLine($"Invalid option: {choice}");
