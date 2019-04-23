@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Trestlebridge.Interfaces;
+using Trestlebridge.Models.Processors;
 
 namespace Trestlebridge.Models.Animals {
     public class Cow : IResource, IGrazing, IMeatProducing {
@@ -22,7 +23,7 @@ namespace Trestlebridge.Models.Animals {
             Console.WriteLine($"Cow {this._shortId} just ate {this.GrassPerDay}kg of grass");
         }
 
-        public double Butcher () {
+        public double Process (MeatProcessor equipment) {
             return _meatProduced;
         }
 

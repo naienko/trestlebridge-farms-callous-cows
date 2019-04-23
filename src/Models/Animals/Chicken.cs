@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Trestlebridge.Interfaces;
+using Trestlebridge.Models.Processors;
 
 namespace Trestlebridge.Models.Animals {
     public class Chicken : IResource, IMeatProducing, IEggProducing, IFeatherProducing {
@@ -19,9 +20,11 @@ namespace Trestlebridge.Models.Animals {
         public string Type { get; } = "Chicken";
 
         // Methods
-        public double Butcher () {
+
+        public double Process (MeatProcessor equipment) {
             return _meatProduced;
         }
+		
         public int Retrieve () {
             return _eggsProduced;
         }
@@ -32,5 +35,6 @@ namespace Trestlebridge.Models.Animals {
         public override string ToString () {
             return $"Chicken {this._shortId}. Cluck!";
         }
-    }
+
+	}
 }

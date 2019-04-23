@@ -11,3 +11,15 @@ option 3
 	
 option 4
 	monitor for changes as 1-3 are updated
+
+processing
+1 choose processor 
+2 choose facility based on what the processor processes 
+3 choose animal type from facility.Animals list (use hashset again?) 
+4 choose how many 
+5 check processor capacity 
+6 add 'how many of type' to List to be processed
+7 double-check goahead 
+	if yes GOTO 8
+	if no GOTO 3
+8 pass 'how many of type' to the process() method of each type, which will multiply 'how many of type' by 'how many of resource' and return value(s)
