@@ -1,7 +1,9 @@
+using Trestlebridge.Models.Processors;
+
 namespace Trestlebridge.Interfaces
 {
-    public interface ICompostProducing : IResource
+    public interface ICompostProducing : IResource<CompostProcessor>
     {
-        double Glean ();
+        
     }
 }

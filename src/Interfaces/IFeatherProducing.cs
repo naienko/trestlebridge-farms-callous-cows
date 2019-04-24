@@ -1,7 +1,8 @@
+using Trestlebridge.Models.Processors;
+
 namespace Trestlebridge.Interfaces
 {
-    public interface IFeatherProducing
+    public interface IFeatherProducing : IResource<FeatherProcessor>
     {
-        double Pluck ();
     }
 }

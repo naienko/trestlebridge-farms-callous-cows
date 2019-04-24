@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Trestlebridge.Interfaces;
+using Trestlebridge.Models.Processors;
 
 namespace Trestlebridge.Models.Animals {
-    public class Duck : IResource, IEggProducing, IFeatherProducing {
+    public class Duck : IEggProducing, IFeatherProducing {
 
         private Guid _id = Guid.NewGuid();
 
@@ -19,10 +20,10 @@ namespace Trestlebridge.Models.Animals {
         public string Type { get; } = "Duck";
 
         // Methods
-        public int Retrieve () {
+        public double Process (EggProcessor equipment) {
             return _eggsProduced;
         }
-        public double Pluck () {
+        public double Process (FeatherProcessor equipment) {
             return _feathersProduced;
         }
 

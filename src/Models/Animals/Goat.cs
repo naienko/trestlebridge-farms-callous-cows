@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Trestlebridge.Interfaces;
+using Trestlebridge.Models.Processors;
 
 namespace Trestlebridge.Models.Animals {
-    public class Goat : IResource, IGrazing, ICompostProducing {
+    public class Goat : IGrazing, ICompostProducing {
 
         private Guid _id = Guid.NewGuid();
         private double _compostProduced = 7.5;
@@ -22,7 +23,7 @@ namespace Trestlebridge.Models.Animals {
             Console.WriteLine($"Goat {this._shortId} just ate {this.GrassPerDay}kg of grass");
         }
 
-		public double Glean () {
+		public double Process (CompostProcessor equipment) {
 			return _compostProduced;
 		}
 

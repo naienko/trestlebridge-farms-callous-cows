@@ -78,12 +78,19 @@ namespace Trestlebridge.Actions.Producers
 							for (int i = 0; i <= item.Key; i++)
 							{
 								Dictionary<IResource<SeedProcessor>, double> _output = new Dictionary<IResource<SeedProcessor>, double>();
-								 // this returns a double
 								_output.Add(item.Value, item.Value.Process(_seedProcessor));
 								_seedProcessor.Output.Add(_output);
 							}
 						}
 					}
+					foreach (Dictionary<IResource<SeedProcessor>, double> output in _seedProcessor.Output)
+					{
+						foreach (KeyValuePair<IResource<SeedProcessor>, double> entry in output)
+						{
+							Console.WriteLine($"{entry.Value} {entry.Key.Type} seeds were produced");
+						}
+					}
+					Console.ReadLine();
 				}
 				else if (processGo == "n")
 				{

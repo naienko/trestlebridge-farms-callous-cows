@@ -13,10 +13,10 @@ namespace Trestlebridge.Models.Plants
         public double Process (SeedProcessor equipment) {
             return _seedsProduced;
         }
-		public double Glean () {
-			return _compostProduced;
-		}
-
+        public double Process (CompostProcessor equipment) {
+            return _compostProduced;
+        }
+		
         public override string ToString () {
             return $"Sunflower. Double-Yum!";
         }

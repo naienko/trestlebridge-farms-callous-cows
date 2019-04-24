@@ -4,7 +4,7 @@ using Trestlebridge.Interfaces;
 using Trestlebridge.Models.Processors;
 
 namespace Trestlebridge.Models.Animals {
-    public class Ostrich : IResource, IGrazing, IMeatProducing, IEggProducing {
+    public class Ostrich : IGrazing, IMeatProducing, IEggProducing {
 
         private Guid _id = Guid.NewGuid();
         private double _meatProduced = 2.6;
@@ -27,7 +27,7 @@ namespace Trestlebridge.Models.Animals {
         public double Process (MeatProcessor equipment) {
             return _meatProduced;
         }
-        public int Retrieve () {
+        public double Process (EggProcessor equipment) {
             return _eggsProduced;
         }
 
