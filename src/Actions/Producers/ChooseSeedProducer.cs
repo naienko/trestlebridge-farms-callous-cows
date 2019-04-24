@@ -88,6 +88,7 @@ namespace Trestlebridge.Actions.Producers
 						foreach (KeyValuePair<IResource<SeedProcessor>, double> entry in output)
 						{
 							Console.WriteLine($"{entry.Value} {entry.Key.Type} seeds were produced");
+							// hashset group by seed type, add values together
 						}
 					}
 					Console.ReadLine();
