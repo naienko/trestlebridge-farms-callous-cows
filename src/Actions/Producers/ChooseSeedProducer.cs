@@ -13,7 +13,7 @@ namespace Trestlebridge.Actions.Producers
 {
 	public class ChooseSeedProducer
 	{
-		public static void CollectInput(Farm farm)
+		public static void CollectInput(Farm farm, SeedProcessor equipment)
 		{
 			//loop list all the field objects in the list of field objects that might produce the seed resource
 			foreach (PlowedField field in farm.PlowedFields)
@@ -62,10 +62,9 @@ namespace Trestlebridge.Actions.Producers
 			//break out to new file?
 			//acquire input
 			int resourceCount = Int32.Parse(Console.ReadLine());
-			//create new SeedProcessor machine object
-			SeedProcessor _seedProcessor = new SeedProcessor();
-			if (resourceCount <= _seedProcessor.Capacity) //change this check to account for all _seedProcessor.Materials
-														  //use reduce to find out how many total rows are in _seedProcessor.Materials
+			
+			if (resourceCount <= equipment.Capacity) //change this check to account for all equipment.Materials
+														  //use reduce to find out how many total rows are in equipment.Materials
 			{
 				//create new Material object with chosen plant type and number of plants to process
 				Material<SeedProcessor> _material = new Material<SeedProcessor>()
@@ -74,9 +73,11 @@ namespace Trestlebridge.Actions.Producers
 					Count = resourceCount
 				};
 				//add Material object to List in machine object
-				_seedProcessor.Materials.Add(_material);
-				//loop through the list of plant objects in the chosen field object and remove resourceCount objects from that list iff they match the chosen plant type
-				for (int i = 0; i <= resourceCount; i++)
+				//why are the Material objects overwriting each other
+				equipment.Materials.Add(_material);
+				//loop through the list of plant objects in the chosen field object and remove #resourceCount objects from that list iff they match the chosen plant type
+				//TODO: this loop doesn't work right -- it's only removing 1, not resourceCount
+				for (int i = 0; i < resourceCount; i++)
 				{
 					if (chosenField.Plants[i] == chosenSeed)
 					{
@@ -92,21 +93,22 @@ namespace Trestlebridge.Actions.Producers
 				if (processGo == "y")
 				{
 					//loop through machine object Materials list
-					foreach (Material<SeedProcessor> material in _seedProcessor.Materials)
+					foreach (Material<SeedProcessor> material in equipment.Materials)
 					{
+						Console.WriteLine($"processing {material.Count} {material.Resource.Type}");
 						//loop bounded by how many of given plant type
 						for (int i = 0; i < material.Count; i++)
 						{
 							//create new Dictionary to hold given plant type and results of processing one of that plant type
 							Dictionary<IResource<SeedProcessor>, double> _output = new Dictionary<IResource<SeedProcessor>, double>();
 							//fill Dictionary
-							_output.Add(material.Resource, material.Resource.Process(_seedProcessor));
+							_output.Add(material.Resource, material.Resource.Process(equipment));
 							//Add Dictionary to List property containing all results
-							_seedProcessor.Output.Add(_output);
+							equipment.Output.Add(_output);
 						}
 					}
 //loop through the list of output Dictionaries
-					foreach (Dictionary<IResource<SeedProcessor>, double> output in _seedProcessor.Output)
+					foreach (Dictionary<IResource<SeedProcessor>, double> output in equipment.Output)
 					{
 						//iterate each keyvaluepair in chosen Dictionary
 						foreach (KeyValuePair<IResource<SeedProcessor>, double> entry in output)
@@ -121,7 +123,7 @@ namespace Trestlebridge.Actions.Producers
 				}
 				else if (processGo == "n")
 				{
-					CollectInput(farm);
+					CollectInput(farm, equipment);
 				}
 				else
 				{

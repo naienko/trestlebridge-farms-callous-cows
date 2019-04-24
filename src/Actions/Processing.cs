@@ -4,6 +4,7 @@ using Trestlebridge.Models;
 using Trestlebridge.Models.Facilities;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Actions.Producers;
+using Trestlebridge.Models.Processors;
 
 namespace Trestlebridge.Actions {
 	public class Processing {
@@ -24,8 +25,9 @@ namespace Trestlebridge.Actions {
             switch (Int32.Parse(choice))
 			{
 				case 1:
-					//Console.WriteLine("Not available yet");
-					ChooseSeedProducer.CollectInput(farm);
+					//create new SeedProcessor machine object
+					SeedProcessor _seedProcessor = new SeedProcessor();
+					ChooseSeedProducer.CollectInput(farm, _seedProcessor);
 					break;
 				case 2:
 					//ChooseMeatProducer.CollectInput(farm);
