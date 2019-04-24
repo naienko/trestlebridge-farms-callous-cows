@@ -1,7 +1,9 @@
+using Trestlebridge.Models.Processors;
+
 namespace Trestlebridge.Interfaces
 {
     public interface ISeedProducing : IResource
     {
-        double Harvest ();
+        double Process (SeedProcessor equipment);
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using Trestlebridge.Interfaces;
+using Trestlebridge.Models.Processors;
 
 namespace Trestlebridge.Models.Plants
 {
@@ -8,7 +9,7 @@ namespace Trestlebridge.Models.Plants
         private int _seedsProduced = 520;
         public string Type { get; } = "Sesame";
 
-        public double Harvest () {
+        public double Process (SeedProcessor equipment) {
             return _seedsProduced;
         }
 
