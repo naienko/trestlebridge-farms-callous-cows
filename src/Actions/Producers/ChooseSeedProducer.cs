@@ -47,8 +47,11 @@ namespace Trestlebridge.Actions.Producers
 			Console.Write("> ");
 
 			int resourceChoice = Int32.Parse(Console.ReadLine());
-			IResource<SeedProcessor> chosenSeed = chosenField.Plants[resourceChoice - 1];
-			Console.WriteLine($"How many {chosenSeed.Type} should be processed?");
+			// this doesn't work, because of the way the hashset works
+			//IResource<SeedProcessor> chosenSeed = chosenField.Plants[resourceChoice - 1];
+			IResource<SeedProcessor> chosenSeed = chosenField.Plants.First(n => n.Type == plantCount[resourceChoice - 1].Type);
+
+			Console.WriteLine($"How many {plantCount[resourceChoice - 1].Type} should be processed?");
 			Console.Write("> ");
 			//break out to new file?
 			int resourceCount = Int32.Parse(Console.ReadLine());
@@ -61,7 +64,7 @@ namespace Trestlebridge.Actions.Producers
 				string processGo = Console.ReadLine();
 				if (processGo == "y")
 				{
-					Dictionary<int, IResource<SeedProcessor>> _material = new Dictionary<int, IResource<SeedProcessor>>();
+					Dictionary<int, IResource<SeedProcessor>> _material = new Dictionary<int,IResource<SeedProcessor>>();
 					_material.Add(resourceCount, chosenSeed);
 					_seedProcessor.Materials.Add(_material);
 					for (int i = 0; i <= resourceCount; i++)
