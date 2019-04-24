@@ -4,7 +4,7 @@ using Trestlebridge.Models.Processors;
 
 namespace Trestlebridge.Models.Plants
 {
-    public class Sunflower : IResource, ISeedProducing, ICompostProducing
+    public class Sunflower :  ISeedProducing, ICompostProducing
     {
         private int _seedsProduced = 650;
 		private double _compostProduced = 21.6;

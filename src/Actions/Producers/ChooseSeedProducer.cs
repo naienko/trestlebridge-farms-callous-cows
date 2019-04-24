@@ -47,20 +47,21 @@ namespace Trestlebridge.Actions.Producers
 			Console.Write("> ");
 
 			int resourceChoice = Int32.Parse(Console.ReadLine());
-			IResource chosenSeed = chosenField.Plants[resourceChoice - 1];
+			IResource<SeedProcessor> chosenSeed = chosenField.Plants[resourceChoice - 1];
 			Console.WriteLine($"How many {chosenSeed.Type} should be processed?");
 			Console.Write("> ");
 			//break out to new file?
 			int resourceCount = Int32.Parse(Console.ReadLine());
 			SeedProcessor _seedProcessor = new SeedProcessor();
 			if (resourceCount <= _seedProcessor.Capacity) //change this check to account for all _seedProcessor.Materials
+			//use reduce to find out how many total rows are in _seedProcessor.Materials
 			{
 				Console.WriteLine("Ready to process? (Y/n)");
 				Console.Write("> ");
 				string processGo = Console.ReadLine();
 				if (processGo == "y")
 				{
-					Dictionary<int, IResource> _material = new Dictionary<int, IResource>();
+					Dictionary<int, IResource<SeedProcessor>> _material = new Dictionary<int, IResource<SeedProcessor>>();
 					_material.Add(resourceCount, chosenSeed);
 					_seedProcessor.Materials.Add(_material);
 					for (int i = 0; i <= resourceCount; i++)
@@ -69,7 +70,20 @@ namespace Trestlebridge.Actions.Producers
 							chosenField.Plants.RemoveAt(i);
 						}
 					}
-					//run Process loop on Materials
+
+					foreach (Dictionary<int, IResource<SeedProcessor>> material in _seedProcessor.Materials)
+					{
+						foreach (KeyValuePair<int, IResource<SeedProcessor>> item in material)
+						{
+							for (int i = 0; i <= item.Key; i++)
+							{
+								Dictionary<IResource<SeedProcessor>, double> _output = new Dictionary<IResource<SeedProcessor>, double>();
+								 // this returns a double
+								_output.Add(item.Value, item.Value.Process(_seedProcessor));
+								_seedProcessor.Output.Add(_output);
+							}
+						}
+					}
 				}
 				else if (processGo == "n")
 				{

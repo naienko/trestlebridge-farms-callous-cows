@@ -27,11 +27,7 @@ namespace Trestlebridge.Actions.Producers
 				// Console.WriteLine($"{farm.ChickenHouses.IndexOf(house) + 1 + farm.GrazingFields.Count}. Chicken House ({house.Chickens.Count} chickens)");
 				wheresTheMeat.Add(house);
 			}
-			foreach (IMeatProcess<someTypeHere> house in farm.DuckHouses)
-			{
-				// Console.WriteLine($"{farm.DuckHouses.IndexOf(house) + 1 + farm.GrazingFields.Count + farm.ChickenHouses.Count}. Duck House ({house.Ducks.Count} ducks)");
-				wheresTheMeat.Add(house);
-			}
+		
 
 			foreach (IMeatProcess<someTypeHere> facility in wheresTheMeat)
 			{

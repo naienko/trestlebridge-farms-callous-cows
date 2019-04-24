@@ -4,7 +4,7 @@ using Trestlebridge.Models.Processors;
 
 namespace Trestlebridge.Models.Plants
 {
-    public class Sesame : IResource, ISeedProducing
+    public class Sesame : ISeedProducing
     {
         private int _seedsProduced = 520;
         public string Type { get; } = "Sesame";
