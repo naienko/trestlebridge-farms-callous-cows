@@ -26,7 +26,6 @@ namespace Trestlebridge.Actions.Producers
 			Console.Write("> ");
 			int choice = Int32.Parse(Console.ReadLine());
 
-			//then jump to list 'type and count of animals' in chosen facility (hashset)
 			PlowedField chosenField = farm.PlowedFields[choice - 1];
 			Console.Clear();
 			List<TypeCounter> plantCount = (
@@ -64,8 +63,12 @@ namespace Trestlebridge.Actions.Producers
 					Dictionary<int, IResource> _material = new Dictionary<int, IResource>();
 					_material.Add(resourceCount, chosenSeed);
 					_seedProcessor.Materials.Add(_material);
-
-					//remove resourceCount from chosenField
+					for (int i = 0; i <= resourceCount; i++)
+					{
+						if (chosenField.Plants[i] == chosenSeed) {
+							chosenField.Plants.RemoveAt(i);
+						}
+					}
 					//run Process loop on Materials
 				}
 				else if (processGo == "n")
