@@ -7,7 +7,7 @@ using Trestlebridge.Actions;
 
 
 namespace Trestlebridge.Models.Facilities {
-    public class DuckHouse : IFacility<Duck>, IMeatProcess<Duck>
+    public class DuckHouse : IFacility<Duck>
     {
         private int _capacity = 15;
         private Guid _id = Guid.NewGuid();

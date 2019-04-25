@@ -30,7 +30,8 @@ namespace Trestlebridge.Actions {
 					ChooseSeedProducer.CollectInput(farm, _seedProcessor);
 					break;
 				case 2:
-					//ChooseMeatProducer.CollectInput(farm);
+					MeatProcessor _meatProcessor = new MeatProcessor();
+					ChooseMeatProducer.CollectInput(farm, _meatProcessor);
 					break;
 				case 3:
 					Console.WriteLine("Not available yet");

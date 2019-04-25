@@ -6,12 +6,14 @@ using Trestlebridge.Actions;
 
 
 namespace Trestlebridge.Models.Facilities {
-    public class GrazingField : IFacility<IGrazing>, IMeatProcess<IGrazing>
+    public class GrazingField : IFacility<IGrazing>, IMeatFacility<IMeatProducing>
     {
         private int _capacity = 2;
         private Guid _id = Guid.NewGuid();
 
         private List<IGrazing> _animals = new List<IGrazing>();
+
+        private List<IMeatProducing> _meatAnimals = new List<IMeatProducing>();
 
         public string Type { get; } = "Grazing Field";
 
@@ -26,11 +28,21 @@ namespace Trestlebridge.Models.Facilities {
                 return _animals;
             }
         }
+        public List<IMeatProducing> MeatAnimals {
+            get {
+                return _meatAnimals;
+            }
+        }
 
 		public void AddResource (Farm farm, IGrazing animal)
         {
             if (_animals.Count < _capacity) {
                 _animals.Add(animal);
+                if (animal.Type == "Goat") {
+                    //add to composter list later
+                } else {
+                    _meatAnimals.Add(animal as IMeatProducing);
+                }
             } else {
                 Console.Clear();
                 Console.WriteLine("**** That facility is not large enough ****");
