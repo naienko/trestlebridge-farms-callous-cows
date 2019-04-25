@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using Trestlebridge.Interfaces;
+using Trestlebridge.Models.Processors;
 
 namespace Trestlebridge.Models.Processors {
 	public class CompostProcessor {
-		public List<Dictionary<int, IResource<CompostProcessor>>> Materials { get; set; } = new List<Dictionary<int,IResource<CompostProcessor>>>();
-		public int Capacity { get; } = 5;
-		public List<Dictionary<IResource<CompostProcessor>, double>> Output { get; set; } = new List<Dictionary<IResource<CompostProcessor>, double>>();
+		public List<Material<CompostProcessor>> Materials { get; set; } = new List<Material<CompostProcessor>>();
+		public int Capacity { get; } = 7;
+		public List<Material<CompostProcessor>> Output { get; set; } = new List<Material<CompostProcessor>>();
 	}
 }

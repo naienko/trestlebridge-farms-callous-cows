@@ -1,19 +1,29 @@
 using System;
 using System.Text;
+using System.Linq;
 using System.Collections.Generic;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Actions;
 
-
 namespace Trestlebridge.Models.Facilities {
-    public class GrazingField : IFacility<IGrazing>, IMeatFacility<IMeatProducing>
+    public class GrazingField : IFacility<IGrazing>, IMeatFacility<IMeatProducing>, ICompostFacility<ICompostProducing>
     {
         private int _capacity = 2;
         private Guid _id = Guid.NewGuid();
 
-        private List<IGrazing> _animals = new List<IGrazing>();
+        private List<IGrazing> _animals {
+            get {
+                List<IGrazing> castMeat = _meatAnimals.Cast<IGrazing>().ToList();
+                List<IGrazing> castCompost = _compostAnimals.Cast<IGrazing>().ToList();
+                List<IGrazing> _group = new List<IGrazing>();
+                _group.AddRange(castCompost);
+                _group.AddRange(castMeat);
+                return _group;
+            }
+        }
 
         private List<IMeatProducing> _meatAnimals = new List<IMeatProducing>();
+        private List<ICompostProducing> _compostAnimals = new List<ICompostProducing>();
 
         public string Type { get; } = "Grazing Field";
 
@@ -33,13 +43,18 @@ namespace Trestlebridge.Models.Facilities {
                 return _meatAnimals;
             }
         }
+        public List<ICompostProducing> CompostResource {
+            get {
+                return _compostAnimals;
+            }
+        }
 
 		public void AddResource (Farm farm, IGrazing animal)
         {
             if (_animals.Count < _capacity) {
                 _animals.Add(animal);
                 if (animal.Type == "Goat") {
-                    //add to composter list later
+                    _compostAnimals.Add(animal as ICompostProducing);
                 } else {
                     _meatAnimals.Add(animal as IMeatProducing);
                 }

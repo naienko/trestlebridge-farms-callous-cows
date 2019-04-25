@@ -6,12 +6,14 @@ using Trestlebridge.Actions;
 
 
 namespace Trestlebridge.Models.Facilities {
-    public class NaturalField : IFacility<ICompostProducing>
+    public class NaturalField : IFacility<ICompostProducing>, ICompostFacility<ICompostProducing>
     {
         private int _capacity = 10;
         private Guid _id = Guid.NewGuid();
 
         private List<ICompostProducing> _plants = new List<ICompostProducing>();
+
+        public string Type { get; } = "Natural Field";
 
         public double Capacity {
             get {
@@ -20,6 +22,11 @@ namespace Trestlebridge.Models.Facilities {
         }
 
         public List<ICompostProducing> Plants {
+            get {
+                return _plants;
+            }
+        }
+        public List<ICompostProducing> CompostResource {
             get {
                 return _plants;
             }

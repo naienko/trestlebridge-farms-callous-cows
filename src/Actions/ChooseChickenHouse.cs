@@ -10,8 +10,8 @@ namespace Trestlebridge.Actions {
         public static void CollectInput (Farm farm, Chicken animal) {
             foreach (ChickenHouse field in farm.ChickenHouses)
             {
-                if (field.Animals.Count < field.Capacity) {
-                    Console.WriteLine ($"{farm.ChickenHouses.IndexOf(field)+1}. Chicken House ({field.Animals.Count} of {field.Capacity} chickens)");
+                if (field.MeatAnimals.Count < field.Capacity) {
+                    Console.WriteLine ($"{farm.ChickenHouses.IndexOf(field)+1}. Chicken House ({field.MeatAnimals.Count} of {field.Capacity} chickens)");
                 }
             }
 

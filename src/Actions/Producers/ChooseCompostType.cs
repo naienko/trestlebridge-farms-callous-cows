@@ -10,25 +10,25 @@ using Trestlebridge.HashBox;
 
 namespace Trestlebridge.Actions.Producers
 {
-	public class ChooseMeatType
+	public class ChooseCompostType
 	{
-		public static void CollectInput(Farm farm, MeatProcessor equipment, IMeatFacility<IMeatProducing> chosenFacility)
+		public static void CollectInput(Farm farm, CompostProcessor equipment, ICompostFacility<ICompostProducing> chosenFacility)
 		{
 			Console.Clear();
 			//create hashtable of plants by type with count
-			List<TypeCounter> animalCount = (
-				from animal in chosenFacility.MeatAnimals
-				group animal by animal.Type into AnimalGroup
+			List<TypeCounter> compostCount = (
+				from resource in chosenFacility.CompostResource
+				group resource by resource.Type into compostGroup
 				select new TypeCounter
 				{
-					Type = AnimalGroup.Key,
-					Count = AnimalGroup.Count()
+					Type = compostGroup.Key,
+					Count = compostGroup.Count()
 				}
 			).ToList();
 			//loop list all the plant objects in the list of plant objects in the chosen field
-			foreach (TypeCounter entry in animalCount)
+			foreach (TypeCounter entry in compostCount)
 			{
-				Console.WriteLine($"{animalCount.IndexOf(entry) + 1}. {entry.Count} {entry.Type}");
+				Console.WriteLine($"{compostCount.IndexOf(entry) + 1}. {entry.Count} {entry.Type}");
 			}
 			Console.WriteLine();
 			//ask for input
@@ -39,16 +39,16 @@ namespace Trestlebridge.Actions.Producers
 			int resourceChoice = Int32.Parse(Console.ReadLine());
 
 			//use input to fill chosen plant type variable by getting the first object from the list of plant objects in the chosen field that matches the chosen type in the hashset
-			IResource<MeatProcessor> chosenAnimal = chosenFacility.MeatAnimals.First(n => n.Type == animalCount[resourceChoice - 1].Type);
+			IResource<CompostProcessor> chosenResource = chosenFacility.CompostResource.First(n => n.Type == compostCount[resourceChoice - 1].Type);
 			//ask for input
-			Console.WriteLine($"How many {chosenAnimal.Type} should be processed?");
+			Console.WriteLine($"How many {chosenResource.Type} should be processed?");
 			Console.Write("> ");
 			//break out to new file?
 			//acquire input
 			int resourceCount = Int32.Parse(Console.ReadLine());
 
 			double materialsInEquipment = 0;
-			foreach (Material<MeatProcessor> entry in equipment.Materials)
+			foreach (Material<CompostProcessor> entry in equipment.Materials)
 			{
 				materialsInEquipment = materialsInEquipment + entry.Count;
 			}
@@ -56,22 +56,22 @@ namespace Trestlebridge.Actions.Producers
 			if (materialsInEquipment + resourceCount <= equipment.Capacity) //change this check to account for all equipment.Materials
 			{
 				//create new Material object with chosen plant type and number of plants to process
-				Material<MeatProcessor> _material = new Material<MeatProcessor>()
+				Material<CompostProcessor> _material = new Material<CompostProcessor>()
 				{
-					Resource = chosenAnimal,
+					Resource = chosenResource,
 					Count = resourceCount
 				};
 				//add Material object to List in machine object
 				equipment.Materials.Add(_material);
 				//loop through the list of plant objects in the chosen field object and remove #resourceCount objects from that list iff they match the chosen plant type
 				int j = 0;
-				for (int i = 0; i < chosenFacility.MeatAnimals.Count; i++)
+				for (int i = 0; i < chosenFacility.CompostResource.Count; i++)
 				{
 					if (j < resourceCount)
 					{
-						while (j < resourceCount && chosenFacility.MeatAnimals[i].Type == chosenAnimal.Type)
+						while (j < resourceCount && chosenFacility.CompostResource[i].Type == chosenResource.Type)
 						{
-							chosenFacility.MeatAnimals.RemoveAt(i);
+							chosenFacility.CompostResource.RemoveAt(i);
 							j++;
 						}
 					}
@@ -86,14 +86,14 @@ namespace Trestlebridge.Actions.Producers
 				if (processGo == "y")
 				{
 					//loop through machine object Materials list
-					foreach (Material<MeatProcessor> material in equipment.Materials)
+					foreach (Material<CompostProcessor> material in equipment.Materials)
 					{
 						Console.WriteLine($"processing {material.Count} {material.Resource.Type}");
 						//loop bounded by how many of given plant type
 						for (int i = 0; i < material.Count; i++)
 						{
 							//create new Material object to hold given plant type and results of processing one of that plant type
-							Material<MeatProcessor> _output = new Material<MeatProcessor>()
+							Material<CompostProcessor> _output = new Material<CompostProcessor>()
 							{
 								Resource = material.Resource,
 								Count = material.Resource.Process(equipment)
@@ -103,7 +103,7 @@ namespace Trestlebridge.Actions.Producers
 						}
 					}
 					// generate hashtable by type with sum
-					List<TypeCounter> totalMeatByType = (
+					List<TypeCounter> totalCompostByType = (
 						from entry in equipment.Output
 						group entry by entry.Resource.Type into TypeGroup
 						select new TypeCounter
@@ -114,9 +114,9 @@ namespace Trestlebridge.Actions.Producers
 					).ToList();
 
 					//loop through the output hashtable
-					foreach (TypeCounter entry in totalMeatByType)
+					foreach (TypeCounter entry in totalCompostByType)
 					{
-						Console.WriteLine($"{entry.Count} kg of {entry.Type} meat was produced");
+						Console.WriteLine($"{entry.Count}kg of {entry.Type} compost was produced");
 					}
 					//pause console for reading
 					Console.WriteLine("Press any key to go back to main menu.");
@@ -124,7 +124,7 @@ namespace Trestlebridge.Actions.Producers
 				}
 				else if (processGo == "n")
 				{
-					ChooseMeatProducer.CollectInput(farm, equipment);
+					ChooseCompostProducer.CollectInput(farm, equipment);
 				}
 				else
 				{
@@ -135,7 +135,7 @@ namespace Trestlebridge.Actions.Producers
 			}
 			else
 			{
-				Console.WriteLine("The Meat Processor cannot hold that many at once! Please choose fewer rows.");
+				Console.WriteLine("The Composter cannot hold that many at once! Please choose fewer rows.");
 				Console.ReadLine();
 				CollectInput(farm, equipment, chosenFacility);
 			}

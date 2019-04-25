@@ -38,8 +38,8 @@ namespace Trestlebridge.Actions {
 					CollectInput(farm);
 					break;
 				case 4:
-					Console.WriteLine("Not available yet");
-					CollectInput(farm);
+					CompostProcessor _compostProcessor = new CompostProcessor();
+					ChooseCompostProducer.CollectInput(farm, _compostProcessor);
 					break;
 				case 5:
 					Console.WriteLine("Not available yet");
