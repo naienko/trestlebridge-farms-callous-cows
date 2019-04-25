@@ -6,6 +6,6 @@ namespace Trestlebridge.Models.Processors {
 	public class SeedProcessor {
 		public List<Material<SeedProcessor>> Materials { get; set; } = new List<Material<SeedProcessor>>();
 		public int Capacity { get; } = 5;
-		public List<Dictionary<IResource<SeedProcessor>, double>> Output { get; set; } = new List<Dictionary<IResource<SeedProcessor>, double>>();
+		public List<Material<SeedProcessor>> Output { get; set; } = new List<Material<SeedProcessor>>();
 	}
 }

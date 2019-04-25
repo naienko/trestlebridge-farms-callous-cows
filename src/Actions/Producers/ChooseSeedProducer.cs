@@ -15,6 +15,7 @@ namespace Trestlebridge.Actions.Producers
 	{
 		public static void CollectInput(Farm farm, SeedProcessor equipment)
 		{
+			Console.Clear();
 			//loop list all the field objects in the list of field objects that might produce the seed resource
 			foreach (PlowedField field in farm.PlowedFields)
 			{
@@ -27,10 +28,20 @@ namespace Trestlebridge.Actions.Producers
 			Console.Write("> ");
 			//acquire input
 			int choice = Int32.Parse(Console.ReadLine());
+			if (choice > farm.PlowedFields.Count)
+			{
+			}
+			catch (ArgumentOutOfRangeException)
+			{
+				Console.WriteLine($"Invalid option: {choice}");
+				Console.WriteLine("Press any key to go back to main menu.");
+				Console.ReadLine();
+			}
+
 			//use input to fill chosen field object variable 
 			PlowedField chosenField = farm.PlowedFields[choice - 1];
 			Console.Clear();
-			//create hashset of plants by type with count
+			//create hashtable of plants by type with count
 			List<TypeCounter> plantCount = (
 				from flower in chosenField.Plants
 				group flower by flower.Type into PlantGroup
@@ -61,8 +72,13 @@ namespace Trestlebridge.Actions.Producers
 			//acquire input
 			int resourceCount = Int32.Parse(Console.ReadLine());
 
-			if (resourceCount <= equipment.Capacity) //change this check to account for all equipment.Materials
-													 //use reduce to find out how many total rows are in equipment.Materials
+			double materialsInEquipment = 0;
+			foreach (Material<SeedProcessor> entry in equipment.Materials)
+			{
+				materialsInEquipment = materialsInEquipment+entry.Count;
+			}
+
+			if (materialsInEquipment+resourceCount <= equipment.Capacity) //change this check to account for all equipment.Materials
 			{
 				//create new Material object with chosen plant type and number of plants to process
 				Material<SeedProcessor> _material = new Material<SeedProcessor>()
@@ -73,9 +89,6 @@ namespace Trestlebridge.Actions.Producers
 				//add Material object to List in machine object
 				equipment.Materials.Add(_material);
 				//loop through the list of plant objects in the chosen field object and remove #resourceCount objects from that list iff they match the chosen plant type
-				//TODO: this loop doesn't work right -- it's only removing 1, not resourceCount
-				//I want a loop that doesn't increment until the iff fails
-				//this loop doesn't loop through the whole list of plant objects
 				int j = 0;
 				for (int i = 0; i < chosenField.Plants.Count; i++)
 				{
@@ -88,8 +101,7 @@ namespace Trestlebridge.Actions.Producers
 						}
 					}
 				}
-
-
+				Console.Clear();
 				//ask for input
 				Console.WriteLine("Ready to process? (Y/n)");
 				Console.Write("> ");
@@ -105,26 +117,33 @@ namespace Trestlebridge.Actions.Producers
 						//loop bounded by how many of given plant type
 						for (int i = 0; i < material.Count; i++)
 						{
-							//create new Dictionary to hold given plant type and results of processing one of that plant type
-							Dictionary<IResource<SeedProcessor>, double> _output = new Dictionary<IResource<SeedProcessor>, double>();
-							//fill Dictionary
-							_output.Add(material.Resource, material.Resource.Process(equipment));
-							//Add Dictionary to List property containing all results
+							//create new Material object to hold given plant type and results of processing one of that plant type
+							Material<SeedProcessor> _output = new Material<SeedProcessor>()
+							{
+								Resource = material.Resource,
+								Count = material.Resource.Process(equipment)
+							};
+							//Add Material to List property containing all results
 							equipment.Output.Add(_output);
 						}
 					}
-					//loop through the list of output Dictionaries
-					foreach (Dictionary<IResource<SeedProcessor>, double> output in equipment.Output)
-					{
-						//iterate each keyvaluepair in chosen Dictionary
-						foreach (KeyValuePair<IResource<SeedProcessor>, double> entry in output)
-						{
-							//display keys and values
-							Console.WriteLine($"{entry.Value} {entry.Key.Type} seeds were produced");
-							// hashset group by seed type, add values together
+					// generate hashtable by type with sum
+					List<TypeCounter> totalSeedsByType = (
+						from entry in equipment.Output
+						group entry by entry.Resource.Type into TypeGroup
+						select new TypeCounter {
+							Type = TypeGroup.Key,
+							Count = TypeGroup.Sum(e => e.Count)
 						}
+					).ToList();
+
+					//loop through the output hashtable
+					foreach (TypeCounter entry in totalSeedsByType)
+					{
+						Console.WriteLine($"{entry.Count} {entry.Type} seeds were produced");
 					}
 					//pause console for reading
+					Console.WriteLine("Press any key to go back to main menu.");
 					Console.ReadLine();
 				}
 				else if (processGo == "n")
@@ -142,6 +161,7 @@ namespace Trestlebridge.Actions.Producers
 			{
 				Console.WriteLine("The Seed Processor cannot hold that many at once! Please choose fewer rows.");
 				Console.ReadLine();
+				CollectInput(farm, equipment);
 			}
 
 		}
