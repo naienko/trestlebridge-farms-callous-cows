@@ -76,27 +76,20 @@ namespace Trestlebridge.Actions.Producers
 				//TODO: this loop doesn't work right -- it's only removing 1, not resourceCount
 				//I want a loop that doesn't increment until the iff fails
 				//this loop doesn't loop through the whole list of plant objects
-
-
-				for (int i = 0; i < resourceCount; i++)
+				int j = 0;
+				for (int i = 0; i < chosenField.Plants.Count; i++)
 				{
-					Console.WriteLine($"resource index is {i}");
-					for (int j = 0; j < chosenField.Plants.Count; j++)
+					if (j < resourceCount)
 					{
-						Console.WriteLine($"field index is {j}");
-						while (chosenField.Plants[j].Type == chosenSeed.Type)
+						while (j < resourceCount && chosenField.Plants[i].Type == chosenSeed.Type)
 						{
-							Console.WriteLine($"There is a match at index {j}");
-							chosenField.Plants.RemoveAt(j);
+							chosenField.Plants.RemoveAt(i);
+							j++;
 						}
-						// else
-						// {
-						// 	Console.WriteLine($"There is NOT a match at index {j}");
-						// }
-						Console.WriteLine($"increment field index {j}");
 					}
-					Console.WriteLine($"increment resource index {i}");
 				}
+
+
 				//ask for input
 				Console.WriteLine("Ready to process? (Y/n)");
 				Console.Write("> ");
