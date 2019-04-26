@@ -28,7 +28,28 @@ namespace Trestlebridge.Actions.Producers
 			//loop list all the plant objects in the list of plant objects in the chosen field
 			foreach (TypeCounter entry in animalCount)
 			{
-				Console.WriteLine($"{animalCount.IndexOf(entry) + 1}. {entry.Count} {entry.Type}");
+				//need to find any lines in equipment.Materials that match chosenFacility
+				if (equipment.Materials.Count > 0)
+				{
+					List<Material<MeatProcessor>> inThisFacility = equipment.Materials.Where(m => m.Facility == chosenFacility.shortId).ToList();
+					//then match names from that list to names in chosenFacility
+					foreach (var material in inThisFacility)
+					{
+						if (entry.Type == material.Resource.Type)
+						{
+							Console.WriteLine($"{animalCount.IndexOf(entry) + 1}. {entry.Count - material.Count} {entry.Type}");
+						}
+						else
+						{
+							Console.WriteLine($"{animalCount.IndexOf(entry) + 1}. {entry.Count} {entry.Type}");
+						}
+					}
+				}
+				else
+				{
+					Console.WriteLine($"{animalCount.IndexOf(entry) + 1}. {entry.Count} {entry.Type}");
+				}
+				//Console.WriteLine($"{animalCount.IndexOf(entry) + 1}. {entry.Count} {entry.Type}");
 			}
 			Console.WriteLine();
 			//ask for input
@@ -64,18 +85,6 @@ namespace Trestlebridge.Actions.Producers
 				//add Material object to List in machine object
 				equipment.Materials.Add(_material);
 				//loop through the list of plant objects in the chosen field object and remove #resourceCount objects from that list iff they match the chosen plant type
-				int j = 0;
-				for (int i = 0; i < chosenFacility.MeatResource.Count; i++)
-				{
-					if (j < resourceCount)
-					{
-						while (j < resourceCount && chosenFacility.MeatResource[i].Type == chosenAnimal.Type)
-						{
-							chosenFacility.MeatResource.RemoveAt(i);
-							j++;
-						}
-					}
-				}
 				Console.Clear();
 				//ask for input
 				Console.WriteLine("Ready to process? (Y/n)");
@@ -88,6 +97,35 @@ namespace Trestlebridge.Actions.Producers
 					//loop through machine object Materials list
 					foreach (Material<MeatProcessor> material in equipment.Materials)
 					{
+						if (material.Resource.Type != "Chicken")
+						{
+							int j = 0;
+							var findFacility = farm.GrazingFields.Where(f => f.shortId == material.Facility);
+							GrazingField currentFacility = findFacility.FirstOrDefault<GrazingField>();
+							for (int i = 0; i < currentFacility.MeatResource.Count; i++)
+							{
+								if (j < material.Count)
+								{
+									while (j < material.Count && currentFacility.MeatResource[i].Type == material.Resource.Type)
+									{
+										currentFacility.MeatResource.RemoveAt(i);
+										j++;
+									}
+								}
+							}
+							int k = 0;
+							for (int i = 0; i <= currentFacility.Animals.Count; i++)
+							{
+								if (k < material.Count)
+								{
+									while (k < material.Count && currentFacility.Animals[i].Type == material.Resource.Type)
+									{
+										currentFacility.Animals.RemoveAt(i);
+										k++;
+									}
+								}
+							}
+						}
 						Console.WriteLine($"processing {material.Count} {material.Resource.Type}");
 						//loop bounded by how many of given plant type
 						for (int i = 0; i < material.Count; i++)
