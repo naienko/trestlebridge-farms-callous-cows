@@ -25,34 +25,30 @@ namespace Trestlebridge.Actions.Producers
 					Count = compostGroup.Count()
 				}
 			).ToList();
-			List<TypeCounter> alreadyLoaded = (
-				from material in equipment.Materials
-				group material by material.Resource.Type into howMany
-				select new TypeCounter
-				{
-					Type = howMany.Key,
-					Count = howMany.Count()
-				}
-			).ToList();
 
 			//loop list all the plant objects in the list of plant objects in the chosen field
 			foreach (TypeCounter group in compostCount)
 			{
+				//need to find any lines in equipment.Materials that match chosenFacility
+				if (equipment.Materials.Count > 0)
 				{
-					if (alreadyLoaded.Count > 0)
+					List<Material<CompostProcessor>> inThisFacility = equipment.Materials.Where(m => m.Facility == chosenFacility.shortId).ToList();
+					//then match names from that list to names in chosenFacility
+					foreach (var material in inThisFacility)
 					{
-						for (int j = 0; j < alreadyLoaded.Count; j++)
+						if (group.Type == material.Resource.Type)
 						{
-							if (alreadyLoaded[j].Type == group.Type)
-							{
-								Console.WriteLine($"{compostCount.IndexOf(group) + 1}. {group.Count - alreadyLoaded[j].Count} {group.Type}");
-							}
+							Console.WriteLine($"{compostCount.IndexOf(group) + 1}. {group.Count - material.Count} {group.Type}");
+						}
+						else
+						{
+							Console.WriteLine($"{compostCount.IndexOf(group) + 1}. {group.Count} {group.Type}");
 						}
 					}
-					else
-					{
-						Console.WriteLine($"{compostCount.IndexOf(group) + 1}. {group.Count} {group.Type}");
-					}
+				}
+				else
+				{
+					Console.WriteLine($"{compostCount.IndexOf(group) + 1}. {group.Count} {group.Type}");
 				}
 			}
 			Console.WriteLine();
@@ -106,11 +102,8 @@ namespace Trestlebridge.Actions.Producers
 						if (material.Resource.Type != "Goat")
 						{
 							int j = 0;
-							IEnumerable<NaturalField> findFacility =
-								from field in farm.NaturalFields
-								where field.shortId == material.Facility
-								select field;
-							var currentFacility = (NaturalField)findFacility;
+							var findFacility = farm.NaturalFields.Where(f => f.shortId == material.Facility);
+							NaturalField currentFacility = findFacility.FirstOrDefault<NaturalField>();
 							for (int i = 0; i < currentFacility.CompostResource.Count; i++)
 							{
 								if (j < material.Count)
