@@ -7,12 +7,13 @@ using Trestlebridge.Models.Animals;
 using Trestlebridge.Actions;
 
 namespace Trestlebridge.Models.Facilities {
-    public class ChickenHouse : IFacility<Chicken>, IMeatFacility<Chicken>
+    public class ChickenHouse : IFacility<Chicken>, IMeatFacility<IMeatProducing>
     {
         private int _capacity = 15;
         private Guid _id = Guid.NewGuid();
 
         private List<Chicken> _animals = new List<Chicken>();
+        private List<IMeatProducing> _meats = new List<IMeatProducing>();
 
         public string Type { get; } = "Chicken House";
 
@@ -27,11 +28,17 @@ namespace Trestlebridge.Models.Facilities {
                 return _animals;
             }
         }
+        public List<IMeatProducing> MeatResource {
+            get {
+                return _meats;
+            }
+        }
 
         public void AddResource (Farm farm, Chicken bird)
         {
             if (_animals.Count < _capacity) {
                 _animals.Add(bird);
+                _meats.Add(bird as IMeatProducing);
             } else {
                 Console.WriteLine("**** That facility is not large enough ****");
                 Console.WriteLine("****     Please choose another one     ****");

@@ -7,13 +7,14 @@ using Trestlebridge.Actions;
 using Trestlebridge.Models.Animals;
 
 namespace Trestlebridge.Models.Facilities {
-    public class GrazingField : IFacility<IGrazing>, IMeatFacility<IGrazing>, ICompostFacility<Goat>
+    public class GrazingField : IFacility<IGrazing>, IMeatFacility<IMeatProducing>, ICompostFacility<ICompostProducing>
     {
         private int _capacity = 2;
         private Guid _id = Guid.NewGuid();
 
         private List<IGrazing> _animals = new List<IGrazing>();
-        private List<Goat> _goats = new List<Goat>();
+        private List<ICompostProducing> _goats = new List<ICompostProducing>();
+        private List<IMeatProducing> _meats = new List<IMeatProducing>();
 
         public string Type { get; } = "Grazing Field";
 
@@ -28,7 +29,12 @@ namespace Trestlebridge.Models.Facilities {
                 return _animals;
             }
         }
-        public List<Goat> CompostResource {
+        public List<IMeatProducing> MeatResource {
+            get {
+                return _meats;
+            }
+        }
+        public List<ICompostProducing> CompostResource {
             get {
                 return _goats;
             }
@@ -39,8 +45,11 @@ namespace Trestlebridge.Models.Facilities {
                 _animals.Add(animal);
                 if (animal.Type == "Goat")
                 {
-                    CompostResource.Add(animal as Goat);
+                    _goats.Add(animal as ICompostProducing);
+                } else {
+                    _meats.Add(animal as IMeatProducing);
                 }
+
             } else {
                 Console.Clear();
                 Console.WriteLine("**** That facility is not large enough ****");

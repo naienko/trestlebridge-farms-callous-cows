@@ -17,7 +17,7 @@ namespace Trestlebridge.Actions.Producers
 			Console.Clear();
 			//create hashtable of plants by type with count
 			List<TypeCounter> animalCount = (
-				from animal in chosenFacility.Animals
+				from animal in chosenFacility.MeatResource
 				group animal by animal.Type into AnimalGroup
 				select new TypeCounter
 				{
@@ -39,7 +39,7 @@ namespace Trestlebridge.Actions.Producers
 			int resourceChoice = Int32.Parse(Console.ReadLine());
 
 			//use input to fill chosen plant type variable by getting the first object from the list of plant objects in the chosen field that matches the chosen type in the hashset
-			IResource<MeatProcessor> chosenAnimal = chosenFacility.Animals.First(n => n.Type == animalCount[resourceChoice - 1].Type);
+			IResource<MeatProcessor> chosenAnimal = chosenFacility.MeatResource.First(n => n.Type == animalCount[resourceChoice - 1].Type);
 			//ask for input
 			Console.WriteLine($"How many {chosenAnimal.Type} should be processed?");
 			Console.Write("> ");
@@ -65,13 +65,13 @@ namespace Trestlebridge.Actions.Producers
 				equipment.Materials.Add(_material);
 				//loop through the list of plant objects in the chosen field object and remove #resourceCount objects from that list iff they match the chosen plant type
 				int j = 0;
-				for (int i = 0; i < chosenFacility.Animals.Count; i++)
+				for (int i = 0; i < chosenFacility.MeatResource.Count; i++)
 				{
 					if (j < resourceCount)
 					{
-						while (j < resourceCount && chosenFacility.Animals[i].Type == chosenAnimal.Type)
+						while (j < resourceCount && chosenFacility.MeatResource[i].Type == chosenAnimal.Type)
 						{
-							chosenFacility.Animals.RemoveAt(i);
+							chosenFacility.MeatResource.RemoveAt(i);
 							j++;
 						}
 					}

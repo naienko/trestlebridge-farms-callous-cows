@@ -21,7 +21,7 @@ namespace Trestlebridge.Actions.Producers
 			//TODO: only show grazing fields with goats in
 			foreach (GrazingField field in farm.GrazingFields)
 			{
-				Console.WriteLine($"{farm.GrazingFields.IndexOf(field) + 1}. Grazing Field ({field.Animals.Count} animals)");	
+				Console.WriteLine($"{farm.GrazingFields.IndexOf(field) + 1 + farm.NaturalFields.Count}. Grazing Field ({field.Animals.Count} animals)");	
 			}
 
 			Console.WriteLine();
@@ -31,17 +31,17 @@ namespace Trestlebridge.Actions.Producers
 			//acquire input
 			try
 			{
-				int choice = Int32.Parse(Console.ReadLine())-1;
+				int choice = Int32.Parse(Console.ReadLine());
 				ICompostFacility<ICompostProducing> chosenFacility = null;
 				//use input to fill chosen field object variable 
 				if (farm.NaturalFields.Count == 0 && farm.GrazingFields.Count > 0) {
-					chosenFacility = farm.GrazingFields[choice] as ICompostFacility<ICompostProducing>;
+					chosenFacility = farm.GrazingFields[choice-1] as ICompostFacility<ICompostProducing>;
 				} else if (farm.NaturalFields.Count > 0 && farm.GrazingFields.Count == 0) {
-					chosenFacility = farm.NaturalFields[choice] as ICompostFacility<ICompostProducing>;
+					chosenFacility = farm.NaturalFields[choice-1] as ICompostFacility<ICompostProducing>;
 				} else if (choice >= farm.NaturalFields.Count) {
-					chosenFacility = farm.GrazingFields[choice] as ICompostFacility<ICompostProducing>;
+					chosenFacility = farm.GrazingFields[choice-1] as ICompostFacility<ICompostProducing>;
 				} else if (choice < farm.NaturalFields.Count) {
-					chosenFacility = farm.NaturalFields[choice] as ICompostFacility<ICompostProducing>;
+					chosenFacility = farm.NaturalFields[choice-1] as ICompostFacility<ICompostProducing>;
 				}
 				
 				ChooseCompostType.CollectInput(farm, equipment, chosenFacility);
