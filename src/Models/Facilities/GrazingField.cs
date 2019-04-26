@@ -4,26 +4,16 @@ using System.Linq;
 using System.Collections.Generic;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Actions;
+using Trestlebridge.Models.Animals;
 
 namespace Trestlebridge.Models.Facilities {
-    public class GrazingField : IFacility<IGrazing>, IMeatFacility<IMeatProducing>, ICompostFacility<ICompostProducing>
+    public class GrazingField : IFacility<IGrazing>, IMeatFacility<IGrazing>, ICompostFacility<Goat>
     {
         private int _capacity = 2;
         private Guid _id = Guid.NewGuid();
 
-        private List<IGrazing> _animals {
-            get {
-                List<IGrazing> castMeat = _meatAnimals.Cast<IGrazing>().ToList();
-                List<IGrazing> castCompost = _compostAnimals.Cast<IGrazing>().ToList();
-                List<IGrazing> _group = new List<IGrazing>();
-                _group.AddRange(castCompost);
-                _group.AddRange(castMeat);
-                return _group;
-            }
-        }
-
-        private List<IMeatProducing> _meatAnimals = new List<IMeatProducing>();
-        private List<ICompostProducing> _compostAnimals = new List<ICompostProducing>();
+        private List<IGrazing> _animals = new List<IGrazing>();
+        private List<Goat> _goats = new List<Goat>();
 
         public string Type { get; } = "Grazing Field";
 
@@ -38,25 +28,18 @@ namespace Trestlebridge.Models.Facilities {
                 return _animals;
             }
         }
-        public List<IMeatProducing> MeatAnimals {
+        public List<Goat> CompostResource {
             get {
-                return _meatAnimals;
+                return _goats;
             }
-        }
-        public List<ICompostProducing> CompostResource {
-            get {
-                return _compostAnimals;
-            }
-        }
-
+        } 
 		public void AddResource (Farm farm, IGrazing animal)
         {
             if (_animals.Count < _capacity) {
                 _animals.Add(animal);
-                if (animal.Type == "Goat") {
-                    _compostAnimals.Add(animal as ICompostProducing);
-                } else {
-                    _meatAnimals.Add(animal as IMeatProducing);
+                if (animal.Type == "Goat")
+                {
+                    CompostResource.Add(animal as Goat);
                 }
             } else {
                 Console.Clear();

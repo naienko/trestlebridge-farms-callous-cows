@@ -14,21 +14,16 @@ namespace Trestlebridge.Actions.Producers
 	{
 		public static void CollectInput(Farm farm, CompostProcessor equipment)
 		{
-			List<ICompostFacility<ICompostProducing>> wheresTheCompost = new List<ICompostFacility<ICompostProducing>>();
-			// type constraints?
-			foreach (NaturalField field in farm.NaturalFields)
+			foreach (NaturalField house in farm.NaturalFields)
 			{
-				wheresTheCompost.Add(field);
+				Console.WriteLine($"{farm.NaturalFields.IndexOf(house) + 1}. Natural Field ({house.Plants.Count} rows)");
 			}
+			//TODO: only show grazing fields with goats in
 			foreach (GrazingField field in farm.GrazingFields)
 			{
-				wheresTheCompost.Add(field);
+				Console.WriteLine($"{farm.GrazingFields.IndexOf(field) + 1}. Grazing Field ({field.Animals.Count} animals)");	
 			}
-		
-			foreach (ICompostFacility<ICompostProducing> facility in wheresTheCompost)
-			{
-				Console.WriteLine($"{wheresTheCompost.IndexOf(facility) + 1}. {facility.Type} ({facility.CompostResource.Count} resources which provide compost)");
-			}
+
 			Console.WriteLine();
 			Console.WriteLine("Which facility has the resources you want to process?");
 			//ask for input
@@ -36,9 +31,19 @@ namespace Trestlebridge.Actions.Producers
 			//acquire input
 			try
 			{
-				int choice = Int32.Parse(Console.ReadLine());
+				int choice = Int32.Parse(Console.ReadLine())-1;
+				ICompostFacility<ICompostProducing> chosenFacility = null;
 				//use input to fill chosen field object variable 
-				ICompostFacility<ICompostProducing> chosenFacility = wheresTheCompost[choice - 1];
+				if (farm.NaturalFields.Count == 0 && farm.GrazingFields.Count > 0) {
+					chosenFacility = farm.GrazingFields[choice] as ICompostFacility<ICompostProducing>;
+				} else if (farm.NaturalFields.Count > 0 && farm.GrazingFields.Count == 0) {
+					chosenFacility = farm.NaturalFields[choice] as ICompostFacility<ICompostProducing>;
+				} else if (choice >= farm.NaturalFields.Count) {
+					chosenFacility = farm.GrazingFields[choice] as ICompostFacility<ICompostProducing>;
+				} else if (choice < farm.NaturalFields.Count) {
+					chosenFacility = farm.NaturalFields[choice] as ICompostFacility<ICompostProducing>;
+				}
+				
 				ChooseCompostType.CollectInput(farm, equipment, chosenFacility);
 			}
 			catch (ArgumentOutOfRangeException)

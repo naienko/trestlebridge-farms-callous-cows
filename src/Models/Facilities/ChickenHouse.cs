@@ -7,21 +7,12 @@ using Trestlebridge.Models.Animals;
 using Trestlebridge.Actions;
 
 namespace Trestlebridge.Models.Facilities {
-    public class ChickenHouse : IFacility<Chicken>, IMeatFacility<IMeatProducing>
+    public class ChickenHouse : IFacility<Chicken>, IMeatFacility<Chicken>
     {
         private int _capacity = 15;
         private Guid _id = Guid.NewGuid();
 
-        private List<Chicken> _animals {
-            get {
-                List<Chicken> castMeat = _meatAnimals.Cast<Chicken>().ToList();
-                // List<Chicken> _group = new List<Chicken>();
-                // _group.AddRange(castMeat);
-                // return _group;
-                return castMeat;
-            }
-        }
-        private List<IMeatProducing> _meatAnimals = new List<IMeatProducing>();
+        private List<Chicken> _animals = new List<Chicken>();
 
         public string Type { get; } = "Chicken House";
 
@@ -36,17 +27,11 @@ namespace Trestlebridge.Models.Facilities {
                 return _animals;
             }
         }
-        public List<IMeatProducing> MeatAnimals {
-            get {
-                return _meatAnimals;
-            }
-        }
 
         public void AddResource (Farm farm, Chicken bird)
         {
             if (_animals.Count < _capacity) {
-                //_meatAnimals.Add(bird);
-                _meatAnimals.Add(bird as IMeatProducing);
+                _animals.Add(bird);
             } else {
                 Console.WriteLine("**** That facility is not large enough ****");
                 Console.WriteLine("****     Please choose another one     ****");
@@ -56,8 +41,8 @@ namespace Trestlebridge.Models.Facilities {
 
       public void AddResource (List<Chicken> birds)
         {
-            if (_meatAnimals.Count + birds.Count <= _capacity) {
-                _meatAnimals.AddRange(birds);
+            if (_animals.Count + birds.Count <= _capacity) {
+                _animals.AddRange(birds);
             } else {
                 Console.WriteLine("**** That facility is not large enough ****");
                 Console.WriteLine("****     Please choose another one     ****");
@@ -71,8 +56,8 @@ namespace Trestlebridge.Models.Facilities {
             StringBuilder output = new StringBuilder();
             string shortId = $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
 
-            output.Append($"Chicken house {shortId} has {this._meatAnimals.Count} chickens\n");
-            this._meatAnimals.ForEach(a => output.Append($"   {a}\n"));
+            output.Append($"Chicken house {shortId} has {this._animals.Count} chickens\n");
+            this._animals.ForEach(a => output.Append($"   {a}\n"));
 
             return output.ToString();
         }

@@ -4,6 +4,6 @@ namespace Trestlebridge.Interfaces {
 	public interface IMeatFacility<T>
 	{
 		string Type { get; }
-		List<T> MeatAnimals { get; }
+		List<T> Animals { get; }
 	}
 }
