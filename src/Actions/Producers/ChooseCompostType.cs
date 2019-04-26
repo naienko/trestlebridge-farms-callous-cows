@@ -88,7 +88,7 @@ namespace Trestlebridge.Actions.Producers
 
 				Console.Clear();
 				//ask for input
-				Console.WriteLine("Ready to process? (Y/n)");
+				Console.WriteLine("Ready to process? (y/n)");
 				Console.Write("> ");
 				//acquire input
 				string processGo = Console.ReadLine();
@@ -115,18 +115,18 @@ namespace Trestlebridge.Actions.Producers
 									}
 								}
 							}
-							int k = 0;
-							for (int i = 0; i < currentFacility.Plants.Count; i++)
-							{
-								if (k < material.Count)
-								{
-									while (k < material.Count && currentFacility.Plants[i].Type == material.Resource.Type)
-									{
-										currentFacility.Plants.RemoveAt(i);
-										j++;
-									}
-								}
-							}
+							// int k = 0;
+							// for (int i = 0; i <= currentFacility.Plants.Count; i++)
+							// {
+							// 	if (k < material.Count)
+							// 	{
+							// 		while (k < material.Count && currentFacility.Plants[i].Type == material.Resource.Type)
+							// 		{
+							// 			currentFacility.Plants.RemoveAt(i);
+							// 			i++;
+							// 		}
+							// 	}
+							// }
 						}
 						Console.WriteLine($"processing {material.Count} {material.Resource.Type}");
 						//loop bounded by how many of given plant type
