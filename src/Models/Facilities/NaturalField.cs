@@ -14,6 +14,11 @@ namespace Trestlebridge.Models.Facilities {
         private List<ICompostProducing> _plants = new List<ICompostProducing>();
 
         public string Type { get; } = "Natural Field";
+        public string shortId { 
+            get {
+                return $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
+            }
+        }
 
         public double Capacity {
             get {
@@ -58,7 +63,6 @@ namespace Trestlebridge.Models.Facilities {
         public override string ToString()
         {
             StringBuilder output = new StringBuilder();
-            string shortId = $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
 
             output.Append($"Natural field {shortId} has {this._plants.Count} plants\n");
             this._plants.ForEach(a => output.Append($"   {a}\n"));

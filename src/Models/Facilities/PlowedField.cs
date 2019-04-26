@@ -18,6 +18,11 @@ namespace Trestlebridge.Models.Facilities {
                 return _capacity;
             }
         }
+        public string shortId { 
+            get {
+                return $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
+            }
+        }
 
         public List<ISeedProducing> Plants {
             get {
@@ -51,7 +56,6 @@ namespace Trestlebridge.Models.Facilities {
         public override string ToString()
         {
             StringBuilder output = new StringBuilder();
-            string shortId = $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
 
             output.Append($"Plowed field {shortId} has {this._plants.Count} plants\n");
             this._plants.ForEach(a => output.Append($"   {a}\n"));

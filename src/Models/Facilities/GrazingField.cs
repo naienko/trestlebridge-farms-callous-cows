@@ -17,6 +17,11 @@ namespace Trestlebridge.Models.Facilities {
         private List<IMeatProducing> _meats = new List<IMeatProducing>();
 
         public string Type { get; } = "Grazing Field";
+        public string shortId { 
+            get {
+                return $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
+            }
+        }
 
         public double Capacity {
             get {
@@ -74,9 +79,8 @@ namespace Trestlebridge.Models.Facilities {
         public override string ToString()
         {
             StringBuilder output = new StringBuilder();
-            string shortId = $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
 
-            output.Append($"Grazing field {shortId} has {this._animals.Count} animals\n");
+            output.Append($"Grazing field {this.shortId} has {this._animals.Count} animals\n");
             this._animals.ForEach(a => output.Append($"   {a}\n"));
 
             return output.ToString();

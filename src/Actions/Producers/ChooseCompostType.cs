@@ -59,23 +59,12 @@ namespace Trestlebridge.Actions.Producers
 				Material<CompostProcessor> _material = new Material<CompostProcessor>()
 				{
 					Resource = chosenResource,
-					Count = resourceCount
+					Count = resourceCount,
+					Facility = chosenFacility.shortId
 				};
 				//add Material object to List in machine object
 				equipment.Materials.Add(_material);
-				//loop through the list of plant objects in the chosen field object and remove #resourceCount objects from that list iff they match the chosen plant type
-				int j = 0;
-				for (int i = 0; i < chosenFacility.CompostResource.Count; i++)
-				{
-					if (j < resourceCount)
-					{
-						while (j < resourceCount && chosenFacility.CompostResource[i].Type == chosenResource.Type)
-						{
-							chosenFacility.CompostResource.RemoveAt(i);
-							j++;
-						}
-					}
-				}
+
 				Console.Clear();
 				//ask for input
 				Console.WriteLine("Ready to process? (Y/n)");
@@ -88,6 +77,36 @@ namespace Trestlebridge.Actions.Producers
 					//loop through machine object Materials list
 					foreach (Material<CompostProcessor> material in equipment.Materials)
 					{
+						//loop through the list of plant objects in the chosen field object and remove #resourceCount objects from that list iff they match the chosen plant type
+						if (material.Resource.Type != "Goat")
+						{
+							int j = 0;
+							IEnumerable<NaturalField> findFacility = 
+								from field in farm.NaturalFields
+								where field.shortId == material.Facility
+								select field;
+							var currentFacility = (NaturalField)findFacility;
+							for (int i = 0; i < currentFacility.CompostResource.Count; i++)
+							{
+								if (j < material.Count)
+								{
+									while (j < material.Count && currentFacility.CompostResource[i].Type == material.Resource.Type)
+									{
+										currentFacility.CompostResource.RemoveAt(i);
+										j++;
+									}
+								}
+							}
+							int k = 0;
+							for (int i = 0; i < currentFacility.Plants.Count; i++) {
+								if (k < material.Count) {
+									while (k < material.Count && currentFacility.Plants[i].Type == material.Resource.Type) {
+										currentFacility.Plants.RemoveAt(i);
+										j++;
+									}
+								}
+							}
+						}
 						Console.WriteLine($"processing {material.Count} {material.Resource.Type}");
 						//loop bounded by how many of given plant type
 						for (int i = 0; i < material.Count; i++)

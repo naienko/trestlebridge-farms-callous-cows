@@ -32,19 +32,20 @@ namespace Trestlebridge.Actions.Producers
 			try
 			{
 				int choice = Int32.Parse(Console.ReadLine());
-				ICompostFacility<ICompostProducing> chosenFacility = null;
 				//use input to fill chosen field object variable 
 				if (farm.NaturalFields.Count == 0 && farm.GrazingFields.Count > 0) {
-					chosenFacility = farm.GrazingFields[choice-1] as ICompostFacility<ICompostProducing>;
+					ICompostFacility<ICompostProducing> chosenFacility = farm.GrazingFields[choice-1] as ICompostFacility<ICompostProducing>;
+					ChooseCompostType.CollectInput(farm, equipment, chosenFacility);
 				} else if (farm.NaturalFields.Count > 0 && farm.GrazingFields.Count == 0) {
-					chosenFacility = farm.NaturalFields[choice-1] as ICompostFacility<ICompostProducing>;
-				} else if (choice >= farm.NaturalFields.Count) {
-					chosenFacility = farm.GrazingFields[choice-1] as ICompostFacility<ICompostProducing>;
-				} else if (choice < farm.NaturalFields.Count) {
-					chosenFacility = farm.NaturalFields[choice-1] as ICompostFacility<ICompostProducing>;
+					ICompostFacility<ICompostProducing> chosenFacility = farm.NaturalFields[choice-1] as ICompostFacility<ICompostProducing>;
+					ChooseCompostType.CollectInput(farm, equipment, chosenFacility);
+				} else if (choice > farm.NaturalFields.Count) {
+					ICompostFacility<ICompostProducing> chosenFacility = farm.GrazingFields[choice - 1 - farm.NaturalFields.Count] as ICompostFacility<ICompostProducing>;
+					ChooseCompostType.CollectInput(farm, equipment, chosenFacility);
+				} else if (choice <= farm.NaturalFields.Count) {
+					ICompostFacility<ICompostProducing> chosenFacility = farm.NaturalFields[choice-1] as ICompostFacility<ICompostProducing>;
+					ChooseCompostType.CollectInput(farm, equipment, chosenFacility);
 				}
-				
-				ChooseCompostType.CollectInput(farm, equipment, chosenFacility);
 			}
 			catch (ArgumentOutOfRangeException)
 			{

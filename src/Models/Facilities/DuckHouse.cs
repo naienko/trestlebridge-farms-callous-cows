@@ -15,6 +15,11 @@ namespace Trestlebridge.Models.Facilities {
         private List<Duck> _animals = new List<Duck>();
 
         public string Type { get; } = "Duck House";
+        public string shortId { 
+            get {
+                return $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
+            }
+        }
 
         public double Capacity {
             get {
@@ -54,7 +59,6 @@ namespace Trestlebridge.Models.Facilities {
         public override string ToString()
         {
             StringBuilder output = new StringBuilder();
-            string shortId = $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
 
             output.Append($"Duck house {shortId} has {this._animals.Count} ducks\n");
             this._animals.ForEach(a => output.Append($"   {a}\n"));
