@@ -35,21 +35,24 @@ namespace Trestlebridge.Actions.Producers
 				//IMeatFacility<IMeatProducing> chosenFacility = null;
 				//use input to fill chosen field object variable 
 				if (farm.ChickenHouses.Count == 0 && farm.GrazingFields.Count > 0) {
-					IMeatFacility<IMeatProducing> chosenFacility = farm.GrazingFields[choice-1] as IMeatFacility<IMeatProducing>;
+					GrazingField _facility = farm.GrazingFields[choice-1];
+					IMeatFacility<IMeatProducing> chosenFacility = (IMeatFacility<IMeatProducing>) _facility;
+					//IMeatFacility<IMeatProducing> chosenFacility = farm.GrazingFields[choice-1] as IMeatFacility<IMeatProducing>;
 					ChooseMeatType.CollectInput(farm, equipment, chosenFacility);
 				} else if (farm.ChickenHouses.Count > 0 && farm.GrazingFields.Count == 0) {
-					
 					ChickenHouse _facility = farm.ChickenHouses[choice-1];
-					
 					IMeatFacility<IMeatProducing> chosenFacility = (IMeatFacility<IMeatProducing>) _facility;
-					
+					//IMeatFacility<IMeatProducing> chosenFacility = farm.ChickenHouses[choice-1] as IMeatFacility<IMeatProducing>;
 					ChooseMeatType.CollectInput(farm, equipment, chosenFacility);
-				
-				} else if (choice >= farm.ChickenHouses.Count) {
-					IMeatFacility<IMeatProducing> chosenFacility = farm.GrazingFields[choice-1-farm.ChickenHouses.Count] as IMeatFacility<IMeatProducing>;
+				} else if (choice > farm.ChickenHouses.Count) {
+					GrazingField _facility = farm.GrazingFields[choice - 1 - farm.ChickenHouses.Count];
+					IMeatFacility<IMeatProducing> chosenFacility = (IMeatFacility<IMeatProducing>) _facility;
+					//IMeatFacility<IMeatProducing> chosenFacility = farm.GrazingFields[choice-1-farm.ChickenHouses.Count] as IMeatFacility<IMeatProducing>;
 					ChooseMeatType.CollectInput(farm, equipment, chosenFacility);
-				} else if (choice < farm.ChickenHouses.Count) {
-					IMeatFacility<IMeatProducing> chosenFacility = farm.ChickenHouses[choice-1] as IMeatFacility<IMeatProducing>;
+				} else if (choice <= farm.ChickenHouses.Count) {
+					ChickenHouse _facility = farm.ChickenHouses[choice-1];
+					IMeatFacility<IMeatProducing> chosenFacility = (IMeatFacility<IMeatProducing>) _facility;
+					//IMeatFacility<IMeatProducing> chosenFacility = farm.ChickenHouses[choice-1] as IMeatFacility<IMeatProducing>;
 					ChooseMeatType.CollectInput(farm, equipment, chosenFacility);
 				}
 

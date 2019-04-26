@@ -9,7 +9,7 @@ using Trestlebridge.Models.Animals;
 namespace Trestlebridge.Models.Facilities {
     public class GrazingField : IFacility<IGrazing>, IMeatFacility<IMeatProducing>, ICompostFacility<ICompostProducing>
     {
-        private int _capacity = 2;
+        private int _capacity = 20;
         private Guid _id = Guid.NewGuid();
 
         private List<IGrazing> _animals = new List<IGrazing>();

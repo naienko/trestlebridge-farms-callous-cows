@@ -52,8 +52,8 @@ namespace Trestlebridge.Actions.Producers
 			{
 				materialsInEquipment = materialsInEquipment + entry.Count;
 			}
-
-			if (materialsInEquipment + resourceCount <= equipment.Capacity) //change this check to account for all equipment.Materials
+			//check to see if equipment is full
+			if (materialsInEquipment + resourceCount <= equipment.Capacity) 
 			{
 				//create new Material object with chosen plant type and number of plants to process
 				Material<MeatProcessor> _material = new Material<MeatProcessor>()
