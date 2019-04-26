@@ -25,10 +25,35 @@ namespace Trestlebridge.Actions.Producers
 					Count = compostGroup.Count()
 				}
 			).ToList();
+			List<TypeCounter> alreadyLoaded = (
+				from material in equipment.Materials
+				group material by material.Resource.Type into howMany
+				select new TypeCounter
+				{
+					Type = howMany.Key,
+					Count = howMany.Count()
+				}
+			).ToList();
+
 			//loop list all the plant objects in the list of plant objects in the chosen field
-			foreach (TypeCounter entry in compostCount)
+			foreach (TypeCounter group in compostCount)
 			{
-				Console.WriteLine($"{compostCount.IndexOf(entry) + 1}. {entry.Count} {entry.Type}");
+				{
+					if (alreadyLoaded.Count > 0)
+					{
+						for (int j = 0; j < alreadyLoaded.Count; j++)
+						{
+							if (alreadyLoaded[j].Type == group.Type)
+							{
+								Console.WriteLine($"{compostCount.IndexOf(group) + 1}. {group.Count - alreadyLoaded[j].Count} {group.Type}");
+							}
+						}
+					}
+					else
+					{
+						Console.WriteLine($"{compostCount.IndexOf(group) + 1}. {group.Count} {group.Type}");
+					}
+				}
 			}
 			Console.WriteLine();
 			//ask for input
@@ -81,7 +106,7 @@ namespace Trestlebridge.Actions.Producers
 						if (material.Resource.Type != "Goat")
 						{
 							int j = 0;
-							IEnumerable<NaturalField> findFacility = 
+							IEnumerable<NaturalField> findFacility =
 								from field in farm.NaturalFields
 								where field.shortId == material.Facility
 								select field;
@@ -98,9 +123,12 @@ namespace Trestlebridge.Actions.Producers
 								}
 							}
 							int k = 0;
-							for (int i = 0; i < currentFacility.Plants.Count; i++) {
-								if (k < material.Count) {
-									while (k < material.Count && currentFacility.Plants[i].Type == material.Resource.Type) {
+							for (int i = 0; i < currentFacility.Plants.Count; i++)
+							{
+								if (k < material.Count)
+								{
+									while (k < material.Count && currentFacility.Plants[i].Type == material.Resource.Type)
+									{
 										currentFacility.Plants.RemoveAt(i);
 										j++;
 									}

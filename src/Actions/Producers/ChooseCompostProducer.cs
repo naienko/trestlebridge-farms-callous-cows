@@ -14,14 +14,53 @@ namespace Trestlebridge.Actions.Producers
 	{
 		public static void CollectInput(Farm farm, CompostProcessor equipment)
 		{
+			List<TypeCounter> alreadyLoaded = (
+				from material in equipment.Materials
+				group material by material.Resource.Type into howMany
+				select new TypeCounter
+				{
+					Type = howMany.Key,
+					Count = howMany.Count()
+				}
+			).ToList();
 			foreach (NaturalField house in farm.NaturalFields)
 			{
-				Console.WriteLine($"{farm.NaturalFields.IndexOf(house) + 1}. Natural Field ({house.Plants.Count} rows)");
+				{
+					if (alreadyLoaded.Count > 0)
+					{
+						var SunflowerGroup = from e in alreadyLoaded
+							where e.Type == "Sunflower"
+							select e.Count;
+						double SunflowerCount = SunflowerGroup.FirstOrDefault<double>();
+						var WildflowerGroup = from f in alreadyLoaded
+							where f.Type == "Wildflower"
+							select f.Count;
+						double WildflowerCount = WildflowerGroup.FirstOrDefault<double>();
+						Console.WriteLine($"{farm.NaturalFields.IndexOf(house) + 1}. Natural Field ({house.Plants.Count - SunflowerCount - WildflowerCount} rows)");
+					}
+					else
+					{
+						Console.WriteLine($"{farm.NaturalFields.IndexOf(house) + 1}. Natural Field ({house.Plants.Count} rows)");
+					}
+				}
 			}
 			//TODO: only show grazing fields with goats in
 			foreach (GrazingField field in farm.GrazingFields)
 			{
-				Console.WriteLine($"{farm.GrazingFields.IndexOf(field) + 1 + farm.NaturalFields.Count}. Grazing Field ({field.Animals.Count} animals)");	
+				{
+					if (alreadyLoaded.Count > 0)
+					{
+						var GoatGroup = from f in alreadyLoaded
+							where f.Type == "Goat"
+							select f.Count;
+						double GoatCount = GoatGroup.FirstOrDefault<double>();
+						Console.WriteLine($"{farm.GrazingFields.IndexOf(field) + 1 + farm.NaturalFields.Count}. Grazing Field ({field.Animals.Count - GoatCount} animals)");
+					}
+					else
+					{
+						Console.WriteLine($"{farm.GrazingFields.IndexOf(field) + 1 + farm.NaturalFields.Count}. Grazing Field ({field.Animals.Count} animals)");
+					}
+				}
 			}
 
 			Console.WriteLine();
